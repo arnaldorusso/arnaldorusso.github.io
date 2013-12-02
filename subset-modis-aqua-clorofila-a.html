@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Noticia+Text:400,700' rel='stylesheet' type='text/css' />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title> Subset MODIS-Aqua (Clorofila-a) | Ciclotux </title>
+
+    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/font-awesome.css" type="text/css"/>
+  </head>
+  <body>
+    <div class=container>
+
+<div class="ui-header"> <h1> My logo </h1></div>
+      <div class=navigation>
+        <ul>
+            <li><a href="http://arnaldorusso.github.io/index.html">Blog</a> </li>
+            <li><a href="http://arnaldorusso.github.io/archives.html">Gaveta</a> </li>
+            <li><a href="http://arnaldorusso.github.io/tags.html">Tags</a> </li>
+            <li><a href="http://arnaldorusso.github.io/pages/projetos.html">Projetos</a> </li>
+            <li><a href="http://arnaldorusso.github.io/pages/talks.html">Talks</a> </li>
+            <li><a href="http://arnaldorusso.github.io/pages/eu.html">eu</a> </li>
+        </ul>
+      </div>
+      <div class=separator></div>        
+        <div class=body>
+    <h1 class="title"> Subset MODIS-Aqua (Clorofila-a)</h1>
+    <p class=date> 28 04 2012 </p>
+    <p>Pegando o gancho com uma postagem <a href="http://www.trondkristiansen.com/?page_id=479">[1]</a> que ja tinha guardada de um tempo e do pacote pyMODIS <a href="https://bitbucket.org/tylere/pymodis/overview">[2]</a>, resolvi fazer o meu subset de imagens MODIS em Python.  </p>
+<p>Para esse codigo, foram testadas apenas imagens L3 de Clorofila-a, ja processadas pela agencia espacial norte americana (NASA).  </p>
+<p>Para executar esse codigo, voce precisara de uma imagem: <a href="http://oceandata.sci.gsfc.nasa.gov/cgi/getfile/A20120012012031.L3m_MO_CHL_chlor_a_9km.bz2">Imagem MODIS de 9km.</a>  </p>
+<p>De um bunzip2 no seu diretorio, onde estao as imagens .bz2, para que o codigo abaixo identifique somente as imagens sem a extensao (.bz2).  </p>
+<p>Um detalhe, e que abaixo segue como fazer o processo em batelada, mas para o exemplo de uma imagem, ja e possivel visualizar a coisa.   </p>
+<p>Diferentemente do post <a href="http://www.trondkristiansen.com/?page_id=479">[1]</a>, nao encontrei dificuldades em utilizar os dados. Logo nao fiz uma conversao em ascii e nem utilizei o HDFview.  </p>
+<p>[1] <a href="http://www.trondkristiansen.com/?page_id=479">http://www.trondkristiansen.com/?page_id=479</a><br />
+[2] <a href="https://bitbucket.org/tylere/pymodis/overview">https://bitbucket.org/tylere/pymodis/overview</a>  </p>
+<div class="highlight"><pre><span class="cp">#/usr/bin/env python</span>
+<span class="cp"># -*- coding: utf-8 -*-</span>
+
+<span class="err">&#39;&#39;&#39;</span>
+<span class="n">subset_MODIS</span>
+
+<span class="n">Programa</span> <span class="n">para</span> <span class="n">Fazer</span> <span class="n">um</span> <span class="n">subset</span> <span class="n">de</span> <span class="n">imagens</span> <span class="n">MODIS</span>
+<span class="n">Dentro</span> <span class="n">dos</span> <span class="n">limites</span> <span class="n">Lat</span> <span class="n">e</span> <span class="n">Long</span> <span class="n">determinados</span><span class="p">.</span>
+
+<span class="n">Author</span> <span class="o">=</span>  <span class="n">Arnaldo</span> <span class="n">Russo</span>
+<span class="n">e</span><span class="o">-</span><span class="n">mail</span> <span class="o">=</span>  <span class="n">arnaldorusso</span><span class="err">@</span><span class="n">gmail</span><span class="p">.</span><span class="n">com</span>
+<span class="err">&#39;&#39;&#39;</span>
+<span class="n">from</span> <span class="n">pyhdf</span><span class="p">.</span><span class="n">SD</span> <span class="n">import</span> <span class="o">*</span>
+<span class="n">import</span> <span class="n">numpy</span> <span class="n">as</span> <span class="n">np</span>
+<span class="n">import</span> <span class="n">matplotlib</span><span class="p">.</span><span class="n">pyplot</span> <span class="n">as</span> <span class="n">plt</span>
+<span class="n">import</span> <span class="n">scipy</span><span class="p">.</span><span class="n">io</span>
+<span class="n">import</span> <span class="n">glob</span>
+
+<span class="cp">#setting limits to be cut</span>
+<span class="n">LATLIMS</span> <span class="o">=</span> <span class="p">([</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="o">-</span><span class="mi">30</span><span class="p">])</span>
+<span class="n">LONLIMS</span> <span class="o">=</span> <span class="p">([</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="o">-</span><span class="mi">30</span><span class="p">])</span>
+
+<span class="n">indir</span> <span class="o">=</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">DATA</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">Images</span><span class="o">/</span><span class="n">L3</span><span class="o">/</span><span class="mi">9</span><span class="n">km</span><span class="o">/</span><span class="err">&#39;</span>
+<span class="n">outdir</span> <span class="o">=</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">DATA</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">Images</span><span class="o">/</span><span class="n">L3</span><span class="o">/</span><span class="n">resize</span><span class="o">/</span><span class="err">&#39;</span>
+
+<span class="n">filelist</span> <span class="o">=</span> <span class="n">glob</span><span class="p">.</span><span class="n">glob</span><span class="p">(</span><span class="n">indir</span><span class="o">+</span><span class="err">&#39;</span><span class="n">A</span><span class="o">*</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="n">nfiles</span> <span class="o">=</span> <span class="n">len</span><span class="p">(</span><span class="n">filelist</span><span class="p">)</span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">path</span> <span class="n">in</span> <span class="n">filelist</span><span class="o">:</span>
+  <span class="n">files</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="n">len</span><span class="p">(</span><span class="n">indir</span><span class="p">)</span><span class="o">:</span><span class="p">])</span> <span class="err">#</span><span class="n">remove</span> <span class="n">path</span> <span class="n">name</span>
+
+<span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">multi_img</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="n">len</span><span class="p">(</span><span class="n">filelist</span><span class="p">))</span><span class="o">:</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">SD</span><span class="p">(</span><span class="n">filelist</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">attributes</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="n">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">len</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">keys</span><span class="p">()))</span><span class="o">:</span>
+        <span class="n">nm</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">keys</span><span class="p">()[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">names</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">nm</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="s">&quot;_&quot;</span><span class="p">))</span>
+    <span class="n">pin</span> <span class="o">=</span> <span class="n">dict</span><span class="p">(</span><span class="n">zip</span><span class="p">(</span><span class="n">names</span><span class="p">,</span><span class="n">a</span><span class="p">.</span><span class="n">values</span><span class="p">()[</span><span class="o">:</span><span class="p">]))</span>
+    <span class="n">lon</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">pin</span><span class="p">[</span><span class="err">&#39;</span><span class="n">Westernmost_Longitude</span><span class="err">&#39;</span><span class="p">],</span><span class="n">pin</span><span class="p">[</span><span class="err">&#39;</span><span class="n">Easternmost_Longitude</span><span class="err">&#39;</span><span class="p">],</span><span class="n">pin</span><span class="p">[</span><span class="err">&#39;</span><span class="n">Longitude_Step</span><span class="err">&#39;</span><span class="p">])</span>
+    <span class="n">lat</span><span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="n">pin</span><span class="p">[</span><span class="err">&#39;</span><span class="n">Northernmost_Latitude</span><span class="err">&#39;</span><span class="p">],</span><span class="n">pin</span><span class="p">[</span><span class="err">&#39;</span><span class="n">Southernmost_Latitude</span><span class="err">&#39;</span><span class="p">],</span><span class="o">-</span><span class="n">pin</span><span class="p">[</span><span class="err">&#39;</span><span class="n">Latitude_Step</span><span class="err">&#39;</span><span class="p">])</span>
+    <span class="err">#</span><span class="n">Get</span> <span class="n">the</span> <span class="n">indices</span> <span class="n">needed</span> <span class="k">for</span> <span class="n">the</span> <span class="n">area</span> <span class="n">of</span> <span class="n">interest</span>
+    <span class="n">ilt</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="kt">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">abs</span><span class="p">(</span><span class="n">lat</span><span class="o">-</span><span class="n">max</span><span class="p">(</span><span class="n">LATLIMS</span><span class="p">))))</span> <span class="err">#</span><span class="n">argmin</span> <span class="n">catch</span> <span class="n">the</span> <span class="n">indices</span>
+    <span class="n">ilg</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="kt">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">abs</span><span class="p">(</span><span class="n">lon</span><span class="o">-</span><span class="n">min</span><span class="p">(</span><span class="n">LONLIMS</span><span class="p">))))</span> <span class="err">#</span><span class="n">of</span> <span class="n">minor</span> <span class="n">element</span>
+    <span class="n">ltlm</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="kt">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">fix</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">diff</span><span class="p">(</span><span class="n">LATLIMS</span><span class="p">)</span><span class="o">/</span><span class="n">pin</span><span class="p">[</span><span class="err">&#39;</span><span class="n">Latitude_Step</span><span class="err">&#39;</span><span class="p">]</span><span class="o">+</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="n">lglm</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="kt">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">fix</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">diff</span><span class="p">(</span><span class="n">LONLIMS</span><span class="p">)</span><span class="o">/</span><span class="n">pin</span><span class="p">[</span><span class="err">&#39;</span><span class="n">Longitude_Step</span><span class="err">&#39;</span><span class="p">]</span><span class="o">+</span><span class="mf">0.5</span><span class="p">))</span>
+    <span class="err">#</span><span class="n">retrieve</span> <span class="n">data</span> <span class="n">SDS</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">datasets</span><span class="p">()</span>
+    <span class="n">sds_name</span> <span class="o">=</span> <span class="n">d</span><span class="p">.</span><span class="n">keys</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="err">#</span><span class="n">name</span> <span class="n">of</span> <span class="n">sds</span><span class="p">.</span> <span class="n">Dictionary</span> <span class="n">method</span><span class="p">.</span>
+    <span class="n">sds</span> <span class="o">=</span> <span class="n">A</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="n">sds_name</span><span class="p">)</span>
+    <span class="err">#</span><span class="n">load</span> <span class="n">the</span> <span class="n">subset</span> <span class="n">of</span> <span class="n">data</span> <span class="n">needed</span> <span class="k">for</span> <span class="n">the</span> <span class="n">map</span> <span class="n">limits</span> <span class="n">given</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">sds</span><span class="p">[</span><span class="n">ilt</span><span class="o">:</span><span class="p">(</span><span class="n">ilt</span><span class="o">+</span><span class="n">ltlm</span><span class="p">),</span><span class="n">ilg</span><span class="o">:</span><span class="p">(</span><span class="n">ilg</span><span class="o">+</span><span class="n">lglm</span><span class="p">)]</span>
+    <span class="n">P</span><span class="p">[</span><span class="n">P</span><span class="o">==-</span><span class="mi">32767</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">nan</span> <span class="err">#</span><span class="n">Rrs_670</span><span class="o">:</span><span class="n">bad_value_scaled</span> <span class="o">=</span> <span class="o">-</span><span class="mi">32767</span><span class="n">s</span> <span class="p">;</span>
+    <span class="n">P</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="kt">double</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">P</span><span class="o">=</span><span class="p">(</span><span class="n">pin</span><span class="p">[</span><span class="err">&#39;</span><span class="n">Slope</span><span class="err">&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">P</span><span class="o">+</span><span class="n">pin</span><span class="p">[</span><span class="err">&#39;</span><span class="n">Intercept</span><span class="err">&#39;</span><span class="p">])</span>
+    <span class="n">LT</span><span class="o">=</span><span class="n">lat</span><span class="p">[</span><span class="n">ilt</span><span class="o">+</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ltlm</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="n">LG</span><span class="o">=</span><span class="n">lon</span><span class="p">[</span><span class="n">ilg</span><span class="o">+</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">lglm</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="n">Plg</span><span class="p">,</span><span class="n">Plt</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">LG</span><span class="p">,</span><span class="n">LT</span><span class="p">)</span> <span class="err">#</span><span class="n">Further</span> <span class="n">plots</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">P</span><span class="p">)</span> <span class="err">#</span><span class="n">chlorophyll</span> <span class="n">mapping</span>
+    <span class="n">multi_img</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+
+
+<span class="n">multi_img</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">multi_img</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">P</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="cp">### Save matrix</span>
+<span class="n">np</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">&quot;multi_img&quot;</span><span class="p">,</span><span class="n">multi_img</span><span class="p">)</span>
+<span class="cp"># If you want to share with your Matlab friends Users =]</span>
+<span class="n">scipy</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="n">savemat</span><span class="p">(</span><span class="n">outdir</span><span class="o">+</span><span class="err">&#39;</span><span class="n">multi_matrix</span><span class="p">.</span><span class="n">mat</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">mdict</span><span class="o">=</span><span class="p">{</span><span class="err">&#39;</span><span class="n">multi_img</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">multi_img</span><span class="p">})</span>
+</pre></div>
+
+
+<p>Resultando nessa imagem de Clorofila-a  </p>
+<p><img alt="" src="http://2.bp.blogspot.com/-mDQntMCRnWU/T5vXVhAO9BI/AAAAAAAAAKc/2SK7jkOqJKw/s320/chla.png" /></p>
+    
+<div class=twitter>
+<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+    <p class=tags>This entry was tagged as
+      <a href="http://arnaldorusso.github.io/tag/modis-scipy-matplotlib-python-remote-sensing-numpy-aqua.html">MODIS scipy matplotlib python Remote Sensing numpy Aqua</a>
+    </p>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'ciclotux'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+ 
+
+        </div>
+        
+<div class=footer>
+  <p>&copy; Copyright <script language="JavaScript">var date = new Date(); document.write(date.getFullYear());</script> by Arnaldo Russo</p>
+  <p> Powered by <a href="http://pypi.python.org/pypi/pelican/" target="_blank">Pelican - Python static web generator</a>.  
+    <a href="https://github.com/fjavieralba/flasky">Flasky Theme</a> 
+  </p> 
+  <p>
+    <div class=social style="font-size: 27px;">
+      <ul>
+        <script language="JavaScript">
+          u = 'arnaldorusso';
+          s = 'gmail.com';
+          document.write('<a href=\"mailto:' + u + '@' + s + '\" target=\"_blank\">');
+        </script>
+            <li><i class="icon-envelope icon-large"></i> </li>
+        </a>
+        <a href="http://twitter.com/russo_arnaldo" target="_blank"> <li> <i class="icon-twitter-sign icon-large"> </li></i> </a>
+       <!-- <a href=""><li><i class="icon-linkedin-sign icon-large" ></i></li></a>-->
+        <a href="http://github.com/arnaldorusso/" target="_blank"> <li> <i class="icon-github-sign icon-large"></i> </li> </a>
+        <a href="http://arnaldorusso.github.io/feeds/all.atom.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+      </ul>
+    </div>
+  </p>
+</div>    </div>
+  </body>
+</html>

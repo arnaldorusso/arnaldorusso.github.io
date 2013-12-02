@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ciclotux</title><link href="http://arnaldorusso.github.io/" rel="alternate"></link><link href="ciclotux.org/feeds/.atom.xml" rel="self"></link><id>http://arnaldorusso.github.io/</id><updated>2013-11-26T00:00:00-02:00</updated><entry><title>Pelican, a minha mais nova aquisiçao Python</title><link href="http://arnaldorusso.github.io/pelican-a-minha-mais-nova-aquisicao-python.html" rel="alternate"></link><updated>2013-11-26T00:00:00-02:00</updated><author><name></name></author><id>tag:arnaldorusso.github.io,2013-11-26:pelican-a-minha-mais-nova-aquisicao-python.html</id><summary type="html">&lt;p&gt;É com grande satisfaçao que volto a escrever no ciclotux.org.&lt;/p&gt;
+&lt;p&gt;Ainda nao esta 100%, alias nem meu teclado está, mas ao menos nao tenho
+que me debater com a plataforma do blogger para poder escrever alguma coisa por aqui.&lt;/p&gt;
+&lt;p&gt;Era um ponta pé no saco, toda vez ficar logando no bendito sistema, abrir aquela caixinha tosca, pra digitar os codigos em tags html, e a cada preview, ver que o blogger tinha colocado mais um monte de tags que sequer voce tinha criado. Agora chega disso!&lt;/p&gt;
+&lt;p&gt;O &lt;a href="getpelican.com"&gt;Pelican&lt;/a&gt; e´ um gerador de conteudo estatico [obviamente escrito em Python] que atraves de um template e de arquivos em markdown contendo os textos a serem publicados (e onde estou escrevendo esse, agora) gera a saida HTML. Com git, eu empurro tudo isso pro &lt;a href="http://github.com"&gt;github&lt;/a&gt;, que hospeda esse projeto grauitamente, e assim fica tudo disponibilizado na rede.&lt;/p&gt;
+&lt;p&gt;Posso garantir, que levei menos tempo pra arrumar esse blog rodando desse jeito, do que organizar 3 codigos que eu quisesse publicar no antigo blogger.&lt;/p&gt;
+&lt;p&gt;Sem mais delongas por hoje!
+Posso dizer que estou feliz!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Para escrever o post!&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="n"&gt;post_de_hoje&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;commit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;estreia do Pelican&amp;#39;&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;
+
+&lt;span class="c"&gt;# Dentro do diretorio do Blog&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;html&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;publish&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;github&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="News"></category><category term="Python"></category></entry><entry><title>E com Python digo</title><link href="http://arnaldorusso.github.io/e-com-python-digo.html" rel="alternate"></link><updated>2012-02-08T00:00:00-02:00</updated><author><name></name></author><id>tag:arnaldorusso.github.io,2012-02-08:e-com-python-digo.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Oi Mundo!&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="thats"></category><category term="awesome"></category></entry></feed>

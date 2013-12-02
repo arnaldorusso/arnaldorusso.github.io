@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Noticia+Text:400,700' rel='stylesheet' type='text/css' />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title> Ler HDF-EOS de Imagens MODIS com Python | Ciclotux </title>
+
+    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/font-awesome.css" type="text/css"/>
+  </head>
+  <body>
+    <div class=container>
+
+<div class="ui-header"> <h1> My logo </h1></div>
+      <div class=navigation>
+        <ul>
+            <li><a href="http://arnaldorusso.github.io/index.html">Blog</a> </li>
+            <li><a href="http://arnaldorusso.github.io/archives.html">Gaveta</a> </li>
+            <li><a href="http://arnaldorusso.github.io/tags.html">Tags</a> </li>
+            <li><a href="http://arnaldorusso.github.io/pages/projetos.html">Projetos</a> </li>
+            <li><a href="http://arnaldorusso.github.io/pages/talks.html">Talks</a> </li>
+            <li><a href="http://arnaldorusso.github.io/pages/eu.html">eu</a> </li>
+        </ul>
+      </div>
+      <div class=separator></div>        
+        <div class=body>
+    <h1 class="title"> Ler HDF-EOS de Imagens MODIS com Python</h1>
+    <p class=date> 13 03 2012 </p>
+    <p>Ler HDF de Imagens MODIS com Python.<br />
+Read HDF-EOS with Python  </p>
+<p>Enfrentei esse problema por um tempo, por conta de como era feito o acesso as variaveis e como elas seriam carregadas.<br />
+Usualmente no laboratorio as pessoas utilizam o "Matlab's" para estas finalidades e para listar os atributos, dao o comando hdfinfo e para carregar o hdfread.  </p>
+<p>Pelo que li, as bibliotecas incorporadas para essa finalidade, sao desenvolvidas em C. Ja que o HDF-EOS e uma extensao da NCSA (National Center for Supercomputing Applications). Dessa forma, o uso do HDF-EOS (Earth Observing System) e uma das formas cientificas de se guardar os dados hierarquicamente.  </p>
+<p>Em <strong>Python</strong>, existem algumas bibliotecas para essa finalidade.<br />
+Testei o <strong>gdal</strong>(Geospatial Data Abstraction Library)[1] e o <strong>pyhdf</strong>[2,3]. Ambos sao muito simples de serem instalados.  </p>
+<p>Antes de mostrar como fazer para carregar os dados, programas no bash shell ja tem uma importante funçao na visualizaçao do HDF. O uso do gdalinfo e habilitado pela intalaçao no proprio linux e o ncdump e uma ferramenta para acesso das informaçoes de NetCDF, mas que funcionou muito bem para o HDF-EOS.  </p>
+<div class="highlight"><pre><span class="cp">#bash</span>
+<span class="cp"># gdalinfo para listar todas os atributos</span>
+<span class="n">yepan</span><span class="err">@</span><span class="n">waiapi</span><span class="o">:</span><span class="err">$</span> <span class="n">gdalinfo</span> <span class="n">A20100322010059</span><span class="p">.</span><span class="n">L3m_MO_CHL_chlor_a_4km</span><span class="p">.</span><span class="n">hdf</span>
+
+<span class="cp">#ncdump</span>
+<span class="n">yepan</span><span class="err">@</span><span class="n">waiapi</span><span class="o">:</span><span class="err">$</span> <span class="n">ncdump</span> <span class="o">-</span><span class="n">h</span> <span class="n">A20100322010059</span><span class="p">.</span><span class="n">L3m_MO_CHL_chlor_a_4km</span><span class="p">.</span><span class="n">hdf</span>
+</pre></div>
+
+
+<p>Para acesso ao HDF, fiz o seguinte, primeiramente com o gdal.  </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">gdal</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;A20100322010059.L3m_MO_CHL_chlor_a_4km.hdf&#39;</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">sds_md</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">GetMetadata</span><span class="p">()</span> <span class="c">#lista os atributos com os valores, guardando</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c">#em um dicionario.</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sds_md</span><span class="o">.</span><span class="n">iterkeys</span><span class="p">():</span>
+<span class="err"> </span> <span class="err"> </span> <span class="k">print</span> <span class="n">i</span><span class="p">,</span><span class="n">sds_md</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">data</span>
+<span class="n">Out</span><span class="p">:</span> 
+<span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">],</span>
+       <span class="p">[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">],</span>
+       <span class="p">[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">],</span>
+       <span class="o">...</span><span class="p">,</span> 
+       <span class="p">[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">],</span>
+       <span class="p">[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">],</span>
+       <span class="p">[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>Se o HDF tiver algum "Subdataset" e possivel verificar desse jeito:  </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">neste caso e um HDF de coordenadas de gelo</span>
+<span class="sd">http://www.iup.uni-bremen.de:8084/amsredata/asi_daygrid_swath/l1a/s6250/grid_coordinates/LongitudeLatitudeGrid-s6250-Antarctic.hdf</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">gdal</span>
+<span class="kn">import</span> <span class="nn">gdalnumeric</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;LongitudeLatitudeGrid-s6250-Antarctic.hdf&#39;</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">sds_md</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">GetMetadata</span><span class="p">(</span><span class="s">&#39;SUBDATASETS&#39;</span><span class="p">)</span>
+
+<span class="p">{</span><span class="s">&#39;SUBDATASET_1_DESC&#39;</span><span class="p">:</span> <span class="s">&#39;[1328x1264] Longitudes (32-bit floating-point)&#39;</span><span class="p">,</span>
+<span class="err"> </span><span class="s">&#39;SUBDATASET_1_NAME&#39;</span><span class="p">:</span> <span class="s">&#39;HDF4_SDS:UNKNOWN:&quot;LongitudeLatitudeGrid-s6250-Antarctic.hdf&quot;:0&#39;</span><span class="p">,</span>
+<span class="err"> </span><span class="s">&#39;SUBDATASET_2_DESC&#39;</span><span class="p">:</span> <span class="s">&#39;[1328x1264] Latitudes (32-bit floating-point)&#39;</span><span class="p">,</span>
+<span class="err"> </span><span class="s">&#39;SUBDATASET_2_NAME&#39;</span><span class="p">:</span> <span class="s">&#39;HDF4_SDS:UNKNOWN:&quot;LongitudeLatitudeGrid-s6250-Antarctic.hdf&quot;:1&#39;</span><span class="p">}</span>
+
+<span class="n">datakeys</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;SUBDATASET_1&#39;</span><span class="p">,</span><span class="s">&#39;SUBDATASET_2&#39;</span><span class="p">]</span>
+<span class="n">datanames</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Longitudes&#39;</span><span class="p">,</span> <span class="s">&#39;Latitudes&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">datasets</span><span class="p">):</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">this</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">this</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sds_md</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="s">&#39;_NAME&#39;</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">this</span><span class="p">[</span><span class="s">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sds_md</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="s">&#39;_DESC&#39;</span><span class="p">]</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">this</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdalnumeric</span><span class="o">.</span><span class="n">LoadFile</span><span class="p">(</span><span class="n">this</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">])</span>
+<span class="err"> </span> <span class="err"> </span> <span class="n">datakeys</span><span class="p">[</span><span class="n">datanames</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c">#para ver os dados:</span>
+<span class="n">datakeys</span><span class="p">[</span><span class="s">&#39;Longitudes&#39;</span><span class="p">][</span><span class="s">&#39;data&#39;</span><span class="p">]</span>
+
+<span class="n">datakeys</span><span class="p">[</span><span class="s">&#39;Latitudes&#39;</span><span class="p">][</span><span class="s">&#39;data&#39;</span><span class="p">]</span>
+</pre></div>
+</td></tr></table>
+
+<p>Quanto ao pyhdf, nao me aprofundei ainda nos estudos, mas posso adiantar que ele funcionou para abrir a imagem do MODIS e as coordenadas de gelo tambem, mas de forma muito mais simples. Vamos la!  </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">pyhdf.SD</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;A20100322010059.L3m_MO_CHL_chlor_a_4km.hdf&#39;</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">SD</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">attributes</span><span class="p">()</span> <span class="c">#mostra os atributos</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">datasets</span><span class="p">()</span>
+<span class="n">Out</span> <span class="p">:</span> <span class="p">{</span><span class="s">&#39;l3m_data&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s">&#39;fakeDim0&#39;</span><span class="p">,</span> <span class="s">&#39;fakeDim1&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">4320</span><span class="p">,</span> <span class="mi">8640</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;l3m_data&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[:]</span>
+<span class="n">Out</span> <span class="p">:</span>
+<span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">],</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="p">[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">],</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="p">[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">],</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="o">...</span><span class="p">,</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="p">[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">],</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="p">[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">],</span>
+<span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="p">[</span><span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">,</span> <span class="o">-</span><span class="mf">32767.</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>Para acessar as coordenadas de dados de gelo:  </p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18</pre></div></td><td class="code"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">pyhdf.SD</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;LongitudeLatitudeGrid-s6250-Antarctic.hdf&#39;</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">SD</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">ds</span><span class="o">.</span><span class="n">datasets</span><span class="p">()</span>
+
+<span class="n">Out</span><span class="p">:</span>  
+<span class="p">{</span><span class="s">&#39;Latitudes&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s">&#39;fakeDim2&#39;</span><span class="p">,</span> <span class="s">&#39;fakeDim3&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1328</span><span class="p">,</span> <span class="mi">1264</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+ <span class="s">&#39;Longitudes&#39;</span><span class="p">:</span> <span class="p">((</span><span class="s">&#39;fakeDim0&#39;</span><span class="p">,</span> <span class="s">&#39;fakeDim1&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1328</span><span class="p">,</span> <span class="mi">1264</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span>
+
+<span class="n">lat</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s">&#39;Latitudes&#39;</span><span class="p">)</span>
+<span class="n">lat</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;fakeDim2&#39;</span><span class="p">:</span> <span class="mi">1328</span><span class="p">,</span> <span class="s">&#39;fakeDim3&#39;</span><span class="p">:</span> <span class="mi">1264</span><span class="p">}</span>
+
+<span class="c">#para ver os dados lat[:]</span>
+<span class="c">#Existe tambem a funçao &quot;get&quot;, que permite pegar uma porçao do dado, para datasets multidimensionais</span>
+</pre></div>
+</td></tr></table>
+
+<p>[1] <a href="http://www.gdal.org/">http://www.gdal.org/</a><br />
+[2] <a href="http://hdfeos.org/software/pyhdf.php">http://hdfeos.org/software/pyhdf.php</a><br />
+[3] <a href="http://pysclint.sourceforge.net/pyhdf/">http://pysclint.sourceforge.net/pyhdf/</a></p>
+    
+<div class=twitter>
+<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+    <p class=tags>This entry was tagged as
+      <a href="http://arnaldorusso.github.io/tag/.html"></a>
+    </p>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'ciclotux'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+ 
+
+        </div>
+        
+<div class=footer>
+  <p>&copy; Copyright <script language="JavaScript">var date = new Date(); document.write(date.getFullYear());</script> by Arnaldo Russo</p>
+  <p> Powered by <a href="http://pypi.python.org/pypi/pelican/" target="_blank">Pelican - Python static web generator</a>.  
+    <a href="https://github.com/fjavieralba/flasky">Flasky Theme</a> 
+  </p> 
+  <p>
+    <div class=social style="font-size: 27px;">
+      <ul>
+        <script language="JavaScript">
+          u = 'arnaldorusso';
+          s = 'gmail.com';
+          document.write('<a href=\"mailto:' + u + '@' + s + '\" target=\"_blank\">');
+        </script>
+            <li><i class="icon-envelope icon-large"></i> </li>
+        </a>
+        <a href="http://twitter.com/russo_arnaldo" target="_blank"> <li> <i class="icon-twitter-sign icon-large"> </li></i> </a>
+       <!-- <a href=""><li><i class="icon-linkedin-sign icon-large" ></i></li></a>-->
+        <a href="http://github.com/arnaldorusso/" target="_blank"> <li> <i class="icon-github-sign icon-large"></i> </li> </a>
+        <a href="http://arnaldorusso.github.io/feeds/all.atom.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+      </ul>
+    </div>
+  </p>
+</div>    </div>
+  </body>
+</html>

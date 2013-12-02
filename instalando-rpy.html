@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Noticia+Text:400,700' rel='stylesheet' type='text/css' />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title> Instalando Rpy | Ciclotux </title>
+
+    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/font-awesome.css" type="text/css"/>
+  </head>
+  <body>
+    <div class=container>
+
+<div class="ui-header"> <h1> My logo </h1></div>
+      <div class=navigation>
+        <ul>
+            <li><a href="http://arnaldorusso.github.io/index.html">Blog</a> </li>
+            <li><a href="http://arnaldorusso.github.io/archives.html">Gaveta</a> </li>
+            <li><a href="http://arnaldorusso.github.io/tags.html">Tags</a> </li>
+            <li><a href="http://arnaldorusso.github.io/pages/projetos.html">Projetos</a> </li>
+            <li><a href="http://arnaldorusso.github.io/pages/talks.html">Talks</a> </li>
+            <li><a href="http://arnaldorusso.github.io/pages/eu.html">eu</a> </li>
+        </ul>
+      </div>
+      <div class=separator></div>        
+        <div class=body>
+    <h1 class="title"> Instalando Rpy</h1>
+    <p class=date> 01 12 2013 </p>
+    <p>Para instalar, você pode fazer o download do pacote 
+<a href="http://sourceforge.net/projects/rpy/files/">Rpy</a>.</p>
+<p>Lá vocês vão encontrar dois "sabores" de como acessar o seu R pelo python.
+Eu prefiro acessar com o <em>Rpy</em>, por ser simples e direto.</p>
+<p>O Rpy2 é utilizado por default dentro do <a href="pandas.pydata.org">Pandas</a>, mas eu
+acho que é tudo muito truncado. Mais pra frente eu posso falar um pouco mais
+sobre essa opção.</p>
+<p>Descompacte a pasta no seu diretório.</p>
+<div class="highlight"><pre><span class="nv">$ </span>unzip rpy-1.0.3a.zip
+<span class="nv">$ </span><span class="nb">cd </span>rpy-1.0.3
+<span class="nv">$ </span>python setup.py install
+</pre></div>
+
+
+<p>Se você tiver sorte, tudo ocorreu bem...
+Caso contrário, algumas modificações terão que ser realizadas.</p>
+<p>Para versões mais recentes do R, geralmente o Rpy encontra problemas em
+reconhecer o que chamam de "RHOMES", que é onde fica a instalação do seu R.</p>
+<p>Existem algumas soluções para isso, descritas no README do pacote.
+A que adotei, e pareceu razoável foi a de fazer um link simbólico</p>
+<div class="highlight"><pre><span class="nv">$ </span>sudo ln -s /usr/lib/libR.so /usr/local/lib/
+<span class="nv">$ </span>sudo ldconfig
+</pre></div>
+
+
+<p>Deverá ocorrer tudo bem agora... mas senão, deve ser por causa do tipo de
+bibliotecas que o setup.py está tentando carregar. Geralmente o erro é:</p>
+<div class="highlight"><pre><span class="nv">$ </span>/usr/bin/ld: cannot find -lRlapack
+</pre></div>
+
+
+<p>Assim,  deve trocar a linha do setup.py, para carregar a <strong>lapack</strong> ao 
+invés de <em>Rlapack</em></p>
+<div class="highlight"><pre><span class="k">vi</span> setup.<span class="k">py</span>
+<span class="p">:</span>/libraries
+
+# deverá apontar <span class="nb">para</span> <span class="k">a</span> linha <span class="m">163</span> <span class="k">do</span> <span class="k">c</span>ódigo
+libraries <span class="p">=</span> [<span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;Rlapack&#39;</span>]
+
+# Faç<span class="k">a</span> <span class="k">a</span> devida substituiçã<span class="k">o</span>:
+libraries <span class="p">=</span> [<span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;lapack&#39;</span>]
+</pre></div>
+
+
+<p>E agora basta instalar!
+Espero que tenha dado certo aí também!</p>
+<p>Até mais.</p>
+    
+<div class=twitter>
+<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+    <p class=tags>This entry was tagged as
+      <a href="http://arnaldorusso.github.io/tag/rpy.html">Rpy</a>
+    </p>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'ciclotux'; // required: replace example with your forum shortname
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+ 
+
+        </div>
+        
+<div class=footer>
+  <p>&copy; Copyright <script language="JavaScript">var date = new Date(); document.write(date.getFullYear());</script> by Arnaldo Russo</p>
+  <p> Powered by <a href="http://pypi.python.org/pypi/pelican/" target="_blank">Pelican - Python static web generator</a>.  
+    <a href="https://github.com/fjavieralba/flasky">Flasky Theme</a> 
+  </p> 
+  <p>
+    <div class=social style="font-size: 27px;">
+      <ul>
+        <script language="JavaScript">
+          u = 'arnaldorusso';
+          s = 'gmail.com';
+          document.write('<a href=\"mailto:' + u + '@' + s + '\" target=\"_blank\">');
+        </script>
+            <li><i class="icon-envelope icon-large"></i> </li>
+        </a>
+        <a href="http://twitter.com/russo_arnaldo" target="_blank"> <li> <i class="icon-twitter-sign icon-large"> </li></i> </a>
+       <!-- <a href=""><li><i class="icon-linkedin-sign icon-large" ></i></li></a>-->
+        <a href="http://github.com/arnaldorusso/" target="_blank"> <li> <i class="icon-github-sign icon-large"></i> </li> </a>
+        <a href="http://arnaldorusso.github.io/feeds/all.atom.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+      </ul>
+    </div>
+  </p>
+</div>    </div>
+  </body>
+</html>
