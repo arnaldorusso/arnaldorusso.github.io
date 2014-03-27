@@ -26,6 +26,7 @@ Geralmente existe a impressora padrão do sistema, mas você pode escolher para 
 Isso retornará uma lista das impressoras em sua rede e plugadas localmente.
 
 Depois disso, basta  mandar imprimir da sua casa, na impressora do seu servidor.
+    
     :::bash
     lpr -P nome_da_impressora NomeDoArquivo.pdf
 
