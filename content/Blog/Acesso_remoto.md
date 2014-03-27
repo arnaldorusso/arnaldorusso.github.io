@@ -1,4 +1,4 @@
-Title: Impressao no seu servidor remoto
+Title: Impressão no seu servidor remoto
 Date: 2014-03-27
 Tags:
 
@@ -21,7 +21,7 @@ Geralmente existe a impressora padrão do sistema, mas você pode escolher para 
 
     :::bash
     ssh -p Num_da_porta user@server_IP
-    lpr -p -d
+    lpstat -p -d
 
 Isso retornará uma lista das impressoras em sua rede e plugadas localmente.
 
