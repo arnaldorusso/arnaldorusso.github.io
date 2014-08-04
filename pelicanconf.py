@@ -26,7 +26,7 @@ TWITTER_USERNAME = 'russo_arnaldo'
 DEFAULT_PAGINATION = 5
 STATIC_PATHS = ['images', 'extra/CNAME']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
-
+GOOGLE_ANALYTICS = 'UA-53520721-1'
 DISQUS_SITENAME = 'ciclotux'
 
 # Uncomment following line if you want document-relative URLs when developing
