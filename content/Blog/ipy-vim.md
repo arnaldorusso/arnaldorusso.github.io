@@ -7,11 +7,10 @@ vim, o desenvolvedor `ivanov` criou uma aplicação capaz de conectar o kernel d
 uma sessão IPython com o vim.
 
 Para isso, basta adicionar o plugin em seu diretório *~/.vim/ftplugin/python* ou
-no seu diretório *bundle*, caso você use o infect para carregar todos os seus
+no seu diretório *bundle*, caso você use o *infect* para carregar todos os seus
 plugins de forma mais fácil.
 
-O vim-ipython está disponível em: [http://github.com/ivanov/vim-ipython]
-(http://github.com/ivanov/vim-ipython). Onde existe um passo a passo para
+O `vim-ipython` está disponível em: [http://github.com/ivanov/vim-ipython](http://github.com/ivanov/vim-ipython). Onde existe um passo a passo para
 instalação e utilização.
 
 Se você tem seu vim compilado com a versão atual de utilização do Python, basta
