@@ -4,7 +4,7 @@
     <link href='http://fonts.googleapis.com/css?family=Noticia+Text:400,700' rel='stylesheet' type='text/css' />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title> Impressões | Ciclotux </title>
+    <title> Instalando Rpy - Diferentes versões de R | Ciclotux </title>
 
     <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/style.css" type="text/css" />
     <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/pygments.css" type="text/css" />
@@ -26,21 +26,79 @@
       </div>
       <div class=separator></div>        
         <div class=body>
-    <h1 class="title"> Impressões</h1>
-    <p class=date> 26 12 2013 </p>
-    <p>Sabe quando você se sente fora do ninho? E quando um sorriso de alguém te faz se sintir reconhecido?</p>
-<p>Foi numa loja de instrumentos musicais em Nantes, comprando uns presentes pra moçada da banda, um cara meio bicudo que me atendia, até que pedi pra ver aquele instrumento que tava lá todo escondido.
-Era uma flauta de êmbolo, sabe aquelas de festinha de criança?</p>
-<p>"Flaut à pompe" disse ele, com um sorriso que era o mesmo que eu já estava por encontrar aquilo como um "instrumento". Digo instrumento entre aspas, não porque o de festinha não fosse, mas sim pelo fato de que esse é um pouco mais preciso na regulagem das amplitudes da onda, e não aquela tosqueira descartável descartável.</p>
-<p>Era aquele sorriso que estava sentindo falta... não daquele por se rir de alguma coisa. De um sorriso de dentro, aquele que vem da alegria de algo e não do sarcasmo ou deboche. Talvez exista um nome psicológico pra isso, mas é desse Sorriso que me remeto, que não se vê soltos pelas bandas de cá.</p>
-<p>Bom, agora a <em>Flaut à pompe</em> não está mais na prateleira, e vai voltar junto comigo pro Brasil pra enfeitar alguns barulhos musicais por aí!</p>
+    <h1 class="title"> Instalando Rpy - Diferentes versões de R</h1>
+    <p class=date> 14 04 2014 </p>
+    <p>Para instalar o <strong>rpy</strong> é necessário ter o R instalado em uma versão menor
+que a "3". Para tanto é necessário que se faça o download da versão desejada e a
+compile com especial atenção</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd</span> ~
+<span class="nv">$ </span>wget -c http://cran.r-project.org/src/base/R-2/R-2.15.1.tar.gz
+<span class="nv">$ </span>tar -xzv R-2.15.1.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>R-2.15.1
+<span class="nv">$ </span>./configure --enable-R-shlib <span class="c"># Isto é indicação do **rpy**</span>
+<span class="nv">$ </span>make
+</pre></div>
+
+
+<p>Depois disso é necessário instalar o rpy, que tem alguns poréns.
+O primeiro deles é ao identificar qual a versão do R que se deve utilizar.
+Baixe o arquivo <a href="http://sourceforge.net/projects/rpy/files/rpy/1.0.3/rpy-1.0.3.tar.gz/download">aqui</a></p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">export </span><span class="nv">RHOMES</span><span class="o">=</span><span class="nv">$HOME</span>/R-2.15.1
+
+Ou inserir diretamente a linha no seu .bashrc
+
+<span class="nv">$ </span>vim ~/.bashrc
+<span class="nb">export </span><span class="nv">RHOME</span><span class="o">=</span>~/R-2.15.1
+</pre></div>
+
+
+<p>A segunda etapa é modificar o arquivo setup.py, de acordo com a postagem
+<a href="http://ciclotux.org/instalando-rpy.html">Instalando Rpy</a>, substituindo a 
+biblioteca 'Rlapack' por 'lapack'.</p>
+<p>O terceiro passo, o qual gerou tanta dor de cabeça, é o fato do <strong>Rpy</strong> manter
+um erro de REGEX no seu código.</p>
+<p>Para isso é necessário modificar a sentença:</p>
+<div class="highlight"><pre><span class="nv">$ </span>tar -xzv rpy-1.0.3.tar.gz
+<span class="nv">$ </span><span class="nb">cd </span>rpy-1.0.3
+<span class="nv">$ </span>vim rpy_tools.py
+
+Na linha 101 a regex está incompleta:
+<span class="nv">version</span> <span class="o">=</span> re.search<span class="o">(</span><span class="s2">&quot; +([0-9]\.[0-9]\.[0-9])&quot;</span>, output<span class="o">)</span>
+
+Modifique para:
+<span class="nv">version</span> <span class="o">=</span> re.search<span class="o">(</span><span class="s2">&quot; +([0-9]\.[0-9]+\.[0-9])&quot;</span>, output<span class="o">)</span>
+</pre></div>
+
+
+<p>Após isso falta pouco!
+É necessário alterar o arquivo src/RPY.h</p>
+<div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>rpy-1.0.3/src
+<span class="nv">$ </span>vim RPy.h
+
+Na linha que diz:
+<span class="c">#include &lt;Rdevices.h&gt; /* must follow Graphics.h */</span>
+
+Modifique para:
+<span class="c">#include &lt;Rembedded.h&gt; /* must follow Graphics.h */</span>
+</pre></div>
+
+
+<p>Depois disso tudo:</p>
+<div class="highlight"><pre><span class="nv">$ </span>python setup.py install
+</pre></div>
+
+
+<p>Enquanto não consigo migrar os meus códigos de rpy, para rpy2, vou quebrando
+a cabeça para fazer o rpy funcionar.
+Obrigado novamente ao Jedi Irber, que ajudou a solucionar o problema. =]</p>
+<p>Até mais.</p>
     
 <div class=twitter>
 <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
     <p class=tags>This entry was tagged as
-      <a href="http://arnaldorusso.github.io/tag/impressoes.html">Impressões</a>
+      <a href="http://arnaldorusso.github.io/tag/rpy.html">Rpy</a>
     </p>
 
     <div id="disqus_thread"></div>

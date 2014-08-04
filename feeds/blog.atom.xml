@@ -1,10 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ciclotux</title><link href="http://arnaldorusso.github.io/" rel="alternate"></link><link href="ciclotux.org/feeds/blog.atom.xml" rel="self"></link><id>http://arnaldorusso.github.io/</id><updated>2013-12-26T00:00:00-02:00</updated><entry><title>Impressões</title><link href="http://arnaldorusso.github.io/impressoes.html" rel="alternate"></link><updated>2013-12-26T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:arnaldorusso.github.io,2013-12-26:impressoes.html</id><summary type="html">&lt;p&gt;Sabe quando você se sente fora do ninho? E quando um sorriso de alguém te faz se sintir reconhecido?&lt;/p&gt;
-&lt;p&gt;Foi numa loja de instrumentos musicais em Nantes, comprando uns presentes pra moçada da banda, um cara meio bicudo que me atendia, até que pedi pra ver aquele instrumento que tava lá todo escondido.
-Era uma flauta de êmbolo, sabe aquelas de festinha de criança?&lt;/p&gt;
-&lt;p&gt;"Flaut à pompe" disse ele, com um sorriso que era o mesmo que eu já estava por encontrar aquilo como um "instrumento". Digo instrumento entre aspas, não porque o de festinha não fosse, mas sim pelo fato de que esse é um pouco mais preciso na regulagem das amplitudes da onda, e não aquela tosqueira descartável descartável.&lt;/p&gt;
-&lt;p&gt;Era aquele sorriso que estava sentindo falta... não daquele por se rir de alguma coisa. De um sorriso de dentro, aquele que vem da alegria de algo e não do sarcasmo ou deboche. Talvez exista um nome psicológico pra isso, mas é desse Sorriso que me remeto, que não se vê soltos pelas bandas de cá.&lt;/p&gt;
-&lt;p&gt;Bom, agora a &lt;em&gt;Flaut à pompe&lt;/em&gt; não está mais na prateleira, e vai voltar junto comigo pro Brasil pra enfeitar alguns barulhos musicais por aí!&lt;/p&gt;</summary><category term="Impressões"></category></entry><entry><title>Music hack Day - Londres</title><link href="http://arnaldorusso.github.io/music-hack-day-londres.html" rel="alternate"></link><updated>2013-12-25T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:arnaldorusso.github.io,2013-12-25:music-hack-day-londres.html</id><summary type="html">&lt;p&gt;&lt;img alt="Music Hack Day - London 2013" src="images/mhd.png" /&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ciclotux</title><link href="http://arnaldorusso.github.io/" rel="alternate"></link><link href="ciclotux.org/feeds/blog.atom.xml" rel="self"></link><id>http://arnaldorusso.github.io/</id><updated>2014-08-04T00:00:00-03:00</updated><entry><title>Utilizando o ipy-vim</title><link href="http://arnaldorusso.github.io/utilizando-o-ipy-vim.html" rel="alternate"></link><updated>2014-08-04T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:arnaldorusso.github.io,2014-08-04:utilizando-o-ipy-vim.html</id><summary type="html">&lt;p&gt;Você que quer aumentar a sua proditividade com o Python, e gosta de utilizar o
+vim, o desenvolvedor &lt;code&gt;ivanov&lt;/code&gt; criou uma aplicação capaz de conectar o kernel de
+uma sessão IPython com o vim.&lt;/p&gt;
+&lt;p&gt;Para isso, basta adicionar o plugin em seu diretório &lt;em&gt;~/.vim/ftplugin/python&lt;/em&gt; ou
+no seu diretório &lt;em&gt;bundle&lt;/em&gt;, caso você use o &lt;em&gt;infect&lt;/em&gt; para carregar todos os seus
+plugins de forma mais fácil.&lt;/p&gt;
+&lt;p&gt;O &lt;code&gt;vim-ipython&lt;/code&gt; está disponível em: &lt;a href="http://github.com/ivanov/vim-ipython"&gt;http://github.com/ivanov/vim-ipython&lt;/a&gt;. Onde existe um passo a passo para
+instalação e utilização.&lt;/p&gt;
+&lt;p&gt;Se você tem seu vim compilado com a versão atual de utilização do Python, basta
+abrir em uma janela do seu terminal, um ipython console; ou ipython qtconsole;
+e em outra janela rodar o seu vim.&lt;/p&gt;
+&lt;p&gt;Com o vim aberto,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;:&lt;/span&gt;IPython
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;e isso conectará o seu vim à sessão atual de IPython.
+para rodar todo o seu código você pode utilizar o famoso &lt;strong&gt;F5&lt;/strong&gt; ou &lt;em&gt;&lt;Ctrl&gt;+s&lt;/em&gt; para
+roda a linha atual, ou um bloco selecionado.&lt;/p&gt;
+&lt;p&gt;Caso você não tenha seu vim compilado corretamente, você pode seguir o &lt;a href="https://github.com/mbrochh/vim-as-a-python-ide"&gt;tutorial&lt;/a&gt;
+ do Martin Brocher, em sua apresentação à PyCon 2012.&lt;/p&gt;
+&lt;p&gt;Depois de muito quebrar a cabeça, consegui fazer meu IPython ficar mais produtivo.
+E abandonar por um tempo o meu antigo amigo mágico &lt;em&gt;%paste&lt;/em&gt;. &lt;/p&gt;</summary><category term="IPython"></category><category term="vim"></category></entry><entry><title>Phonegap</title><link href="http://arnaldorusso.github.io/phonegap.html" rel="alternate"></link><updated>2014-07-14T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:arnaldorusso.github.io,2014-07-14:phonegap.html</id><summary type="html">&lt;p&gt;Meu começo ao mundo da plataforma móvel foi com &lt;a href="http://kivy.org"&gt;Kivy&lt;/a&gt;, mas estou começando umas brincadeiras com javascript e quem sabe tentar pra frente emendar as coisas em Python aqui também!&lt;/p&gt;
+&lt;p&gt;Segue o &lt;a href="http://julianhigman.com/blog/2013/10/17/notes-on-setting-up-phonegap-on-ubuntu-for-android-app-development/"&gt;link&lt;/a&gt; de como fiz para instalar uma plataforma phonegap no Linux.&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Instalando Rpy - Diferentes versões de R</title><link href="http://arnaldorusso.github.io/instalando-rpy-diferentes-versoes-de-r.html" rel="alternate"></link><updated>2014-04-14T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:arnaldorusso.github.io,2014-04-14:instalando-rpy-diferentes-versoes-de-r.html</id><summary type="html">&lt;p&gt;Para instalar o &lt;strong&gt;rpy&lt;/strong&gt; é necessário ter o R instalado em uma versão menor
+que a "3". Para tanto é necessário que se faça o download da versão desejada e a
+compile com especial atenção&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~
+&lt;span class="nv"&gt;$ &lt;/span&gt;wget -c http://cran.r-project.org/src/base/R-2/R-2.15.1.tar.gz
+&lt;span class="nv"&gt;$ &lt;/span&gt;tar -xzv R-2.15.1.tar.gz
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;R-2.15.1
+&lt;span class="nv"&gt;$ &lt;/span&gt;./configure --enable-R-shlib &lt;span class="c"&gt;# Isto é indicação do **rpy**&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;make
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Depois disso é necessário instalar o rpy, que tem alguns poréns.
+O primeiro deles é ao identificar qual a versão do R que se deve utilizar.
+Baixe o arquivo &lt;a href="http://sourceforge.net/projects/rpy/files/rpy/1.0.3/rpy-1.0.3.tar.gz/download"&gt;aqui&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;RHOMES&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;/R-2.15.1
+
+Ou inserir diretamente a linha no seu .bashrc
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;vim ~/.bashrc
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;RHOME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/R-2.15.1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;A segunda etapa é modificar o arquivo setup.py, de acordo com a postagem
+&lt;a href="http://ciclotux.org/instalando-rpy.html"&gt;Instalando Rpy&lt;/a&gt;, substituindo a 
+biblioteca 'Rlapack' por 'lapack'.&lt;/p&gt;
+&lt;p&gt;O terceiro passo, o qual gerou tanta dor de cabeça, é o fato do &lt;strong&gt;Rpy&lt;/strong&gt; manter
+um erro de REGEX no seu código.&lt;/p&gt;
+&lt;p&gt;Para isso é necessário modificar a sentença:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;tar -xzv rpy-1.0.3.tar.gz
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;rpy-1.0.3
+&lt;span class="nv"&gt;$ &lt;/span&gt;vim rpy_tools.py
+
+Na linha 101 a regex está incompleta:
+&lt;span class="nv"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; re.search&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; +([0-9]\.[0-9]\.[0-9])&amp;quot;&lt;/span&gt;, output&lt;span class="o"&gt;)&lt;/span&gt;
+
+Modifique para:
+&lt;span class="nv"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; re.search&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; +([0-9]\.[0-9]+\.[0-9])&amp;quot;&lt;/span&gt;, output&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Após isso falta pouco!
+É necessário alterar o arquivo src/RPY.h&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;rpy-1.0.3/src
+&lt;span class="nv"&gt;$ &lt;/span&gt;vim RPy.h
+
+Na linha que diz:
+&lt;span class="c"&gt;#include &amp;lt;Rdevices.h&amp;gt; /* must follow Graphics.h */&lt;/span&gt;
+
+Modifique para:
+&lt;span class="c"&gt;#include &amp;lt;Rembedded.h&amp;gt; /* must follow Graphics.h */&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Depois disso tudo:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;python setup.py install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Enquanto não consigo migrar os meus códigos de rpy, para rpy2, vou quebrando
+a cabeça para fazer o rpy funcionar.
+Obrigado novamente ao Jedi Irber, que ajudou a solucionar o problema. =]&lt;/p&gt;
+&lt;p&gt;Até mais.&lt;/p&gt;</summary><category term="Rpy"></category></entry><entry><title>Impressão no seu servidor remoto</title><link href="http://arnaldorusso.github.io/impressao-no-seu-servidor-remoto.html" rel="alternate"></link><updated>2014-03-27T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:arnaldorusso.github.io,2014-03-27:impressao-no-seu-servidor-remoto.html</id><summary type="html">&lt;p&gt;Ontem me senti super feliz ao conseguir conversar com a impressora através de 
+um simples &lt;strong&gt;lpr&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Obviamente a linha de texto faz tudo que a sua interface gráfica deixa disponibilizado para você,
+mas é sempre muito bom quando se consegue algo que sua interface não deixou ali pra você. 
+Digo isso no caso em que sua outra máquina é um servidor e que a tela é sim, somente uma tela
+preta.&lt;/p&gt;
+&lt;p&gt;Antes de enviar o arquivo para o seu servidor, preste atenção com o &lt;strong&gt;scp&lt;/strong&gt; pois 
+de alguma maneira o flag de porta não é o mesmo que para ssh &lt;strong&gt;-p&lt;/strong&gt; e sim &lt;strong&gt;P&lt;/strong&gt; Maiúsculo.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;scp -P Num_da_porta /local/do/seu/arquivo.pdf user@server_IP:local/para/onde/enviar
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Após isso, na sua sessão logada no server, descubra qual a impressora que você deseja imprimir.
+Geralmente existe a impressora padrão do sistema, mas você pode escolher para qual direcionar.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ssh -p Num_da_porta user@server_IP
+lpstat -p -d
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Isso retornará uma lista das impressoras em sua rede e plugadas localmente.&lt;/p&gt;
+&lt;p&gt;Depois disso, basta  mandar imprimir da sua casa, na impressora do seu servidor.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lpr -P nome_da_impressora NomeDoArquivo.pdf
+&lt;/pre&gt;&lt;/div&gt;</summary><category term=""></category></entry><entry><title>Music hack Day - Londres</title><link href="http://arnaldorusso.github.io/music-hack-day-londres.html" rel="alternate"></link><updated>2013-12-25T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:arnaldorusso.github.io,2013-12-25:music-hack-day-londres.html</id><summary type="html">&lt;p&gt;&lt;img alt="Music Hack Day - London 2013" src="images/mhd.png" /&gt;&lt;/p&gt;
 &lt;p&gt;É sempre grande empolgação poder estar perto de pessoas que viabilizam as ferramentas cotidianas. Depois de alguns encontros Python e depois de dividir um pouco dessa entusiasmo com algumas pessoas que participaram de um curso introdutório de Python aplicado à oceanografia. Dessa vez foi a participação de outro evento, que é o Music Hack Day, que tem uma filosofia bastante coerente com as minhas ideologias. &lt;/p&gt;
 &lt;p&gt;É engrandecedor não se sentir sozinho e ao mesmo tempo parte de um mecanismo de decisão moderno, que se orienta pela criatividade de como as pessoas impões usos às máquinas. A música não está desconexa desse processe também. Se você já ssistiu algum filme com as tecnologias Dolby, você já se aproveitou disso, sem saber. De alguma forma, os bens da indústria e dos serviços, tiveram antes que circular por algum software, inclusive os sonoros.&lt;/p&gt;
 &lt;p&gt;Nesse evento o contato com desenvolvedores de plataformas para escutar música na web, software para diagramação de partituras, gente que processa sinais de reconhecimento de voz e até programadores buscando otimizar os processos chamdos de "tempo real" no processamento de sinais sonoros. Outras brincadeiras foram desenvolvidas também, como aplicativos para encontrar pubs que tocam músicas que tenham o seu estilo musical, até mesmo aplicativos para sincronizar o seu ritmo de respiração sonora e te sugerir músicas para o próximo dia.&lt;/p&gt;
