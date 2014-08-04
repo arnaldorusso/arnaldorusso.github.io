@@ -32,5 +32,5 @@ Caso você não tenha seu vim compilado corretamente, você pode seguir o [tutor
 Depois de muito quebrar a cabeça, consegui fazer meu IPython ficar mais produtivo.
 E abandonar por um tempo o meu antigo amigo mágico *%paste*. 
 
-
+![](images/vim-ipython.png)
 
