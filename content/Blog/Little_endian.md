@@ -23,7 +23,14 @@ codificação e explicações estão
 
 As orientações são:
 
-    Grids that determine the longitude of a given pixel for the 25 km grids for either hemisphere (psn for the Northern Hemisphere and pss for the Southern Hemisphere). These longitude grids are in binary format and are stored as 4-byte integers (little endian) scaled by 100,000 (divide the stored value by 100,000 to get decimal degrees). Each array location (i, j) contains the longitude value at the center of the corresponding data grid cells. An East-longitude convention is used; therefore, positive longitude values are to the east of Greenwich, England.
+    Grids that determine the longitude of a given pixel for the 25 km grids
+    for either hemisphere (psn for the Northern Hemisphere and pss for the
+    Southern Hemisphere). These longitude grids are in binary format and are
+    stored as 4-byte integers (little endian) scaled by 100,000 (divide the
+    stored value by 100,000 to get decimal degrees). Each array location 
+    (i, j) contains the longitude value at the center of the corresponding 
+    data grid cells. An East-longitude convention is used; therefore, 
+    positive longitude values are to the east of Greenwich, England.
 
     psn25lons_v3.dat: 304 columns x 448 rows, range = [-180.000, 179.814]
     pss25lons_v3.dat: 316 columns x 332 rows, range = [-179.818, 179.818]
