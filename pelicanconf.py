@@ -46,7 +46,7 @@ PLUGIN_PATH = ['/home/yepan/ciclotux.org/pelican-plugins']
 
 ### THEME FLASKY
 #THEME = 'theme/flasky'
-THEME = '/home/yepan/ciclotux.org/theme/flasky'
+THEME = 'theme/flasky'
 SECTIONS = [('Blog', 'index.html'),
         ('Gaveta', 'archives.html'),
         ('Tags', 'tags.html'),
