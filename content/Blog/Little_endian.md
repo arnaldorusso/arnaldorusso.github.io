@@ -6,7 +6,7 @@ Sempre que me deparo com os amigos bytes empilhados, recorro ao oráculo
 tentando entender como são feitas as codificações dessas coisas, para
 algo que possamos entender.
 
-Para abrir os dados de gelo marinho, em uma das plataformas de dados é a codificação é "flat binary two-byte integer" [dados Nimbus 7](http://nsidc.org/data/docs/daac/nsidc0079_bootstrap_seaice.gd.html).
+Para abrir os dados de gelo marinho, em uma das plataformas de dados é a codificação "flat binary two-byte integer" [dados Nimbus 7](http://nsidc.org/data/docs/daac/nsidc0079_bootstrap_seaice.gd.html).
 
 Para abrir esse dado:
 
