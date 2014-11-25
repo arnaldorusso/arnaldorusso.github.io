@@ -40,7 +40,7 @@ DISQUS_SITENAME = 'ciclotux'
 #DISPLAY_CATEGORIES_ON_MENU = True
 
 ## PLUGINS
-PLUGIN_PATH = '/home/wuah/ciclotux.org/pelican-plugins'
+#PLUGIN_PATH = '/home/wuah/ciclotux.org/pelican-plugins'
 #PLUGIN_PATH = 'pelican-plugins'
 #PLUGINS = ['googleplus_comments']
 
