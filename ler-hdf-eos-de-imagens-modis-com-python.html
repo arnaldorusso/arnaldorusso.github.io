@@ -3,28 +3,38 @@
   <head>
     <link href='http://fonts.googleapis.com/css?family=Noticia+Text:400,700' rel='stylesheet' type='text/css' />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
+    <meta name="description" content="">
+    <meta name="author" content="Arnaldo Russo">
+
     <title> Ler HDF-EOS de Imagens MODIS com Python | Ciclotux </title>
 
-    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/style.css" type="text/css" />
-    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="http://arnaldorusso.github.io/theme/css/font-awesome.css" type="text/css"/>
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="/theme/css/font-awesome.css" type="text/css"/>
+    <link rel="shortcut icon" href="/theme/images/favicon.ico">
   </head>
   <body>
     <div class=container>
+<!--
+<div class="header">
+    <a href="index.html">Ciclotux</a> <span class="muted"></span>
+</div>
+-->
+<div style="position: relative; left: 0; top: 0;">
+    <img src=images/ciclotux.png style="position: relative; top: 0; left: 0;"/>
+</div>
 
-<div class="ui-header"> <h1> My logo </h1></div>
-      <div class=navigation>
-        <ul>
-            <li><a href="http://arnaldorusso.github.io/index.html">Blog</a> </li>
-            <li><a href="http://arnaldorusso.github.io/archives.html">Gaveta</a> </li>
-            <li><a href="http://arnaldorusso.github.io/tags.html">Tags</a> </li>
-            <li><a href="http://arnaldorusso.github.io/pages/projetos.html">Projetos</a> </li>
-            <li><a href="http://arnaldorusso.github.io/pages/talks.html">Talks</a> </li>
-            <li><a href="http://arnaldorusso.github.io/pages/eu.html">eu</a> </li>
-        </ul>
-      </div>
-      <div class=separator></div>        
+<div class=navigation>
+    <ul>
+            <li><a href="/index.html">Blog</a> </li>
+            <li><a href="/archives.html">Gaveta</a> </li>
+            <li><a href="/tags.html">Tags</a> </li>
+            <li><a href="/pages/projetos.html">Projetos</a> </li>
+            <li><a href="/pages/talks.html">Talks</a> </li>
+            <li><a href="/pages/eu.html">eu</a> </li>
+    </ul>
+</div>
+<div class=separator></div>        
         <div class=body>
     <h1 class="title"> Ler HDF-EOS de Imagens MODIS com Python</h1>
     <p class=date> 13 03 2012 </p>
@@ -36,12 +46,12 @@ Usualmente no laboratorio as pessoas utilizam o "Matlab's" para estas finalidade
 <p>Em <strong>Python</strong>, existem algumas bibliotecas para essa finalidade.<br />
 Testei o <strong>gdal</strong>(Geospatial Data Abstraction Library)[1] e o <strong>pyhdf</strong>[2,3]. Ambos sao muito simples de serem instalados.  </p>
 <p>Antes de mostrar como fazer para carregar os dados, programas no bash shell ja tem uma importante funçao na visualizaçao do HDF. O uso do gdalinfo e habilitado pela intalaçao no proprio linux e o ncdump e uma ferramenta para acesso das informaçoes de NetCDF, mas que funcionou muito bem para o HDF-EOS.  </p>
-<div class="highlight"><pre><span class="cp">#bash</span>
-<span class="cp"># gdalinfo para listar todas os atributos</span>
-<span class="n">yepan</span><span class="err">@</span><span class="n">waiapi</span><span class="o">:</span><span class="err">$</span> <span class="n">gdalinfo</span> <span class="n">A20100322010059</span><span class="p">.</span><span class="n">L3m_MO_CHL_chlor_a_4km</span><span class="p">.</span><span class="n">hdf</span>
+<div class="highlight"><pre>#bash
+# gdalinfo para listar todas os atributos
+yepan@waiapi:$ gdalinfo A20100322010059.L3m_MO_CHL_chlor_a_4km.hdf
 
-<span class="cp">#ncdump</span>
-<span class="n">yepan</span><span class="err">@</span><span class="n">waiapi</span><span class="o">:</span><span class="err">$</span> <span class="n">ncdump</span> <span class="o">-</span><span class="n">h</span> <span class="n">A20100322010059</span><span class="p">.</span><span class="n">L3m_MO_CHL_chlor_a_4km</span><span class="p">.</span><span class="n">hdf</span>
+#ncdump
+yepan@waiapi:$ ncdump -h A20100322010059.L3m_MO_CHL_chlor_a_4km.hdf
 </pre></div>
 
 
@@ -250,9 +260,8 @@ Testei o <strong>gdal</strong>(Geospatial Data Abstraction Library)[1] e o <stro
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 </div>
     <p class=tags>This entry was tagged as
-      <a href="http://arnaldorusso.github.io/tag/.html"></a>
+      <a href="/tag/.html"></a>
     </p>
-
     <div id="disqus_thread"></div>
     <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -266,14 +275,12 @@ Testei o <strong>gdal</strong>(Geospatial Data Abstraction Library)[1] e o <stro
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
- 
-
         </div>
         
 <div class=footer>
   <p>&copy; Copyright <script language="JavaScript">var date = new Date(); document.write(date.getFullYear());</script> by Arnaldo Russo</p>
-  <p> Powered by <a href="http://pypi.python.org/pypi/pelican/" target="_blank">Pelican - Python static web generator</a>.  
-    <a href="https://github.com/fjavieralba/flasky">Flasky Theme</a> 
+  <p> Powered by <a href="http://pypi.python.org/pypi/pelican/" target="_blank">Pelican</a>.  
+    <a href="https://github.com/fjavieralba/flasky">Theme</a>  by <a href="http://fjavieralba.com">fjavieralba</a>
   </p> 
   <p>
     <div class=social style="font-size: 27px;">
@@ -286,9 +293,21 @@ Testei o <strong>gdal</strong>(Geospatial Data Abstraction Library)[1] e o <stro
             <li><i class="icon-envelope icon-large"></i> </li>
         </a>
         <a href="http://twitter.com/russo_arnaldo" target="_blank"> <li> <i class="icon-twitter-sign icon-large"> </li></i> </a>
-       <!-- <a href=""><li><i class="icon-linkedin-sign icon-large" ></i></li></a>-->
+
         <a href="http://github.com/arnaldorusso/" target="_blank"> <li> <i class="icon-github-sign icon-large"></i> </li> </a>
-        <a href="http://arnaldorusso.github.io/feeds/all.atom.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+
+        <!--
+
+        <a href="" target="_blank"><li><i class="icon-linkedin-sign icon-large" ></i></li></a>
+
+        <a href="" target="_blank"><li> <i class="icon-facebook-sign icon-large"></i></li> </a>
+
+        <a href="" target="_blank"><li><i class="icon-google-plus-sign icon-large"></i> </li> </a>
+
+        <a href="" target="_blank"><li><i class="icon-pinterest-sign icon-large"></i></li></a>
+        -->
+
+        <a href="http://arnaldorusso.github.io/feeds/all.rss.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
       </ul>
     </div>
   </p>

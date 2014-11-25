@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Arnaldo Russo">
 
-    <title>Ciclotux - Authors</title>
+    <title>Ciclotux <small></small></title>
 
     <link rel="stylesheet" href="/theme/css/style.css" type="text/css" />
     <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
@@ -36,10 +38,53 @@
 </div>
 <div class=separator></div>        
         <div class=body>
-    <h1>Authors on Ciclotux</h1>
 
-    <ul>        <li><a href="http://arnaldorusso.github.io/author/arnaldo-russo.html">Arnaldo Russo</a> (22)</li>
-    </ul>
+    <div class=entry-overview>
+      <div class=date>Jul 31, 2012</div>
+      <div class=detail>
+          <h1><a href="/livro-estudos-oceanograficos.html">Livro: Estudos Oceanográficos</a></h1>
+          <div class=summary><p> </p></div>
+      </div>
+    </div>
+    <div class=entry-overview>
+      <div class=date>Jun 08, 2012</div>
+      <div class=detail>
+          <h1><a href="/papers-oceanography-and-python.html">Papers - Oceanography and Python</a></h1>
+          <div class=summary><p> </p></div>
+      </div>
+    </div>
+    <div class=entry-overview>
+      <div class=date>Mai 05, 2012</div>
+      <div class=detail>
+          <h1><a href="/problemas-para-compilar-pythonh.html">Problemas para compilar. Python.h</a></h1>
+          <div class=summary><p> </p></div>
+      </div>
+    </div>
+    <div class=entry-overview>
+      <div class=date>Mai 05, 2012</div>
+      <div class=detail>
+          <h1><a href="/python-pra-oceanografos.html">Python pra Oceanógrafos</a></h1>
+          <div class=summary><p> </p></div>
+      </div>
+    </div>
+    <div class=entry-overview>
+      <div class=date>Mar 13, 2012</div>
+      <div class=detail>
+          <h1><a href="/ler-hdf-eos-de-imagens-modis-com-python.html">Ler HDF-EOS de Imagens MODIS com Python</a></h1>
+          <div class=summary><p> </p></div>
+      </div>
+    </div>
+
+<div class="pagination">
+<ul>
+    <a href="/tag/2.html">&larr; Previous</a>
+    <span class=""><a href="http://arnaldorusso.github.io/tag/.html">1</a>
+    <span class=""><a href="http://arnaldorusso.github.io/tag/2.html">2</a>
+    <span class="active"><a href="http://arnaldorusso.github.io/tag/3.html">3</a>
+    <span class="next disabled"><a href="#">&rarr; Next</a>
+</ul>
+</div>
+
         </div>
         
 <div class=footer>
