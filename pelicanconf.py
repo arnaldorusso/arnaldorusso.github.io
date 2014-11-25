@@ -40,13 +40,13 @@ DISQUS_SITENAME = 'ciclotux'
 #DISPLAY_CATEGORIES_ON_MENU = True
 
 ## PLUGINS
-#PLUGIN_PATH = '/home/wuah/ciclotux.org/pelican-plugins'
+PLUGIN_PATH = ['/home/yepan/ciclotux.org/pelican-plugins']
 #PLUGIN_PATH = 'pelican-plugins'
 #PLUGINS = ['googleplus_comments']
 
 ### THEME FLASKY
 #THEME = 'theme/flasky'
-THEME = '/home/wuah/ciclotux.org/theme/flasky'
+THEME = '/home/yepan/ciclotux.org/theme/flasky'
 SECTIONS = [('Blog', 'index.html'),
         ('Gaveta', 'archives.html'),
         ('Tags', 'tags.html'),
