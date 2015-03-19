@@ -1,5 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Ciclotux</title><link href="http://arnaldorusso.github.io/" rel="alternate"></link><link href="ciclotux.org/feeds/all.atom.xml" rel="self"></link><id>http://arnaldorusso.github.io/</id><updated>2014-11-25T00:00:00-02:00</updated><entry><title>One Little two, little three, little Endian</title><link href="http://arnaldorusso.github.io/one-little-two-little-three-little-endian.html" rel="alternate"></link><updated>2014-11-25T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:arnaldorusso.github.io,2014-11-25:one-little-two-little-three-little-endian.html</id><summary type="html">&lt;p&gt;Sempre que me deparo com os amigos bytes empilhados, recorro ao oráculo
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ciclotux</title><link href="http://arnaldorusso.github.io/" rel="alternate"></link><link href="ciclotux.org/feeds/all.atom.xml" rel="self"></link><id>http://arnaldorusso.github.io/</id><updated>2015-03-19T00:00:00-03:00</updated><entry><title>Usando o TMUX com vim e python</title><link href="http://arnaldorusso.github.io/usando-o-tmux-com-vim-e-python.html" rel="alternate"></link><updated>2015-03-19T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:arnaldorusso.github.io,2015-03-19:usando-o-tmux-com-vim-e-python.html</id><summary type="html">&lt;p&gt;O Tmux é um aplicativo chamado &lt;em&gt;Terminal Multiplexer&lt;/em&gt;, que possibilita uma experiência com suas máquinas remotas, de maneira mais agradável. Você pode fazer splits de janelas e ainda utilizar com mais conveniência seus arquivos e executáveis no servidor remoto. Ele é principalmente bom, para evitar perda dos seus trabalhos no servidor quando a rede cai. Assim a sessão do tmux fica rodando no servidor, bastando ao relogar à maquina digitar um &lt;em&gt;tmux attach&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Para instalar, basta um &lt;em&gt;apt-get tmux&lt;/em&gt; e seu uso básico é descrito em vários lugares pela web.&lt;/p&gt;
+&lt;p&gt;Após acessar o seu servidor com &lt;em&gt;ssh&lt;/em&gt;, você roda um &lt;em&gt;tmux attach&lt;/em&gt; ou &lt;em&gt;tmux new&lt;/em&gt; que ele se encarrega de abrir a sessão corrente no seu servidor ou em criar uma nova, caso não consiga fazer o attach.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tmux new
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Isso fará com que o tmux seja iniciado.
+Existem diversos comando utilizados pelo tmux e os únicos dois que utilizei e venho utilizando são:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Ctrl-b %  &lt;span class="c"&gt;# para criar um split vertical&lt;/span&gt;
+Ctrl-b o  &lt;span class="c"&gt;# que alterna entre os &amp;quot;panes&amp;quot; criados&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;A segunda parte, foi habilitar o plugin &lt;a href="https://github.com/jpalardy/vim-slime"&gt;vim-slime&lt;/a&gt; para interagir com meu vim e poder enviar códigos em partes para um IPython aberto em um dos "panes" criados. Veja como ficou minha janela:&lt;/p&gt;
+&lt;p&gt;&lt;img src="images/tmux.png" alt="vim-tmux" style="width: 400px; background-position: center;"/&gt;&lt;/p&gt;
+&lt;p&gt;Dessa forma, toda vez que quero mandar uma linha do vim para o IPython (que está no "pane" lateral faço assim dentro do &lt;em&gt;vi&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#  Normal Mode
+Shift &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="k"&gt;v&lt;/span&gt;  # seleciona &lt;span class="k"&gt;a&lt;/span&gt; linha ou &lt;span class="k"&gt;o&lt;/span&gt; bloco que deseja rodar
+Ctrl&lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="k"&gt;c&lt;/span&gt; &lt;span class="k"&gt;c&lt;/span&gt;  # Deixando &lt;span class="k"&gt;o&lt;/span&gt; Ctrl pressionado &lt;span class="k"&gt;e&lt;/span&gt; apertando &lt;span class="s2"&gt;&amp;quot;c&amp;quot;&lt;/span&gt; duas vezes
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;O prompt do vim-slime te faz duas perguntas:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tmux socket name: default
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Após pressionar enter, ou modificar o nome do socket, caso você tenha aberto o tmux com outro nome ou queira acoplar o vim a um outro socket; e depois:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tmux target pane: :
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Onde as combinações são explicitadas aqui:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tmux target pane
+
+&amp;quot;:&amp;quot; means current window, current pane (a reasonable default)
+&amp;quot;:i&amp;quot; means the ith window, current pane
+&amp;quot;:i.j&amp;quot; means the ith window, jth pane
+&amp;quot;h:i.j&amp;quot; means the tmux session where h is the session identifier (either session name or number), the ith window and the jth pane
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Nesse caso usamos a combinação &lt;strong&gt;0.1&lt;/strong&gt; que quer dizer &lt;em&gt;window 0&lt;/em&gt; e &lt;em&gt;pane 1&lt;/em&gt;.
+ficando assim:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tmux target pane: :&lt;span class="m"&gt;0&lt;/span&gt;.&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Assim está feito o seu transporte de códigos do &lt;em&gt;VI&lt;/em&gt; para o &lt;em&gt;IPython&lt;/em&gt; no seu servidor.
+Deixei no &lt;a href="https://github.com/arnaldorusso/MonVI/blob/master/.tmux.conf"&gt;GitHub&lt;/a&gt; o arquivo de otimizações que estou usando no tmux. Basta colocar no home do seu usuário no servidor.&lt;/p&gt;</summary><category term=""></category></entry><entry><title>One Little two, little three, little Endian</title><link href="http://arnaldorusso.github.io/one-little-two-little-three-little-endian.html" rel="alternate"></link><updated>2014-11-25T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:arnaldorusso.github.io,2014-11-25:one-little-two-little-three-little-endian.html</id><summary type="html">&lt;p&gt;Sempre que me deparo com os amigos bytes empilhados, recorro ao oráculo
 tentando entender como são feitas as codificações dessas coisas, para
 algo que possamos entender.&lt;/p&gt;
 &lt;p&gt;Para abrir os dados de gelo marinho, em uma das plataformas de dados é a codificação "flat binary two-byte integer" &lt;a href="http://nsidc.org/data/docs/daac/nsidc0079_bootstrap_seaice.gd.html"&gt;dados Nimbus 7&lt;/a&gt;.&lt;/p&gt;

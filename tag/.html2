@@ -40,6 +40,13 @@
         <div class=body>
 
     <div class=entry-overview>
+      <div class=date>Nov 25, 2013</div>
+      <div class=detail>
+          <h1><a href="/testando-e-andando-o-blog.html">Testando e andando o Blog</a></h1>
+          <div class=summary><p> </p></div>
+      </div>
+    </div>
+    <div class=entry-overview>
       <div class=date>Nov 18, 2013</div>
       <div class=detail>
           <h1><a href="/o-amor-tambem-fala-python.html">O amor tambem fala Python</a></h1>
@@ -67,13 +74,6 @@
           <div class=summary><p> </p></div>
       </div>
     </div>
-    <div class=entry-overview>
-      <div class=date>Set 28, 2012</div>
-      <div class=detail>
-          <h1><a href="/livros-ii-oceanic-sciences-and-hydrology.html">Livros II - Oceanic Sciences and Hydrology</a></h1>
-          <div class=summary><p> </p></div>
-      </div>
-    </div>
 
 <div class="pagination">
 <ul>
@@ -81,6 +81,7 @@
     <span class=""><a href="http://arnaldorusso.github.io/tag/.html">1</a>
     <span class="active"><a href="http://arnaldorusso.github.io/tag/2.html">2</a>
     <span class=""><a href="http://arnaldorusso.github.io/tag/3.html">3</a>
+    <span class=""><a href="http://arnaldorusso.github.io/tag/4.html">4</a>
     <span class="next"><a href="/tag/3.html">Next &rarr;</a>
 </ul>
 </div>

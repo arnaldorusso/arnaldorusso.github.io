@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Arnaldo Russo">
 
-    <title>Ciclotux - Articles by Arnaldo Russo</title>
+    <title>Ciclotux <small></small></title>
 
     <link rel="stylesheet" href="/theme/css/style.css" type="text/css" />
     <link rel="stylesheet" href="/theme/css/pygments.css" type="text/css" />
@@ -40,50 +40,21 @@
         <div class=body>
 
     <div class=entry-overview>
-      <div class=date>Nov 25, 2013</div>
+      <div class=date>Mar 13, 2012</div>
       <div class=detail>
-          <h1><a href="/testando-e-andando-o-blog.html">Testando e andando o Blog</a></h1>
-          <div class=summary><p> </p></div>
-      </div>
-    </div>
-    <div class=entry-overview>
-      <div class=date>Nov 18, 2013</div>
-      <div class=detail>
-          <h1><a href="/o-amor-tambem-fala-python.html">O amor tambem fala Python</a></h1>
-          <div class=summary><p> </p></div>
-      </div>
-    </div>
-    <div class=entry-overview>
-      <div class=date>Jan 28, 2013</div>
-      <div class=detail>
-          <h1><a href="/data-frame-r-and-python.html">Data Frame - R and Python</a></h1>
-          <div class=summary><p> </p></div>
-      </div>
-    </div>
-    <div class=entry-overview>
-      <div class=date>Dez 10, 2012</div>
-      <div class=detail>
-          <h1><a href="/latitude-e-longitude-ice-cover-nsidc.html">Latitude e Longitude - Ice cover - NSIDC</a></h1>
-          <div class=summary><p> </p></div>
-      </div>
-    </div>
-    <div class=entry-overview>
-      <div class=date>Nov 01, 2012</div>
-      <div class=detail>
-          <h1><a href="/loops-tradicionais.html">Loops 'tradicionais'</a></h1>
+          <h1><a href="/ler-hdf-eos-de-imagens-modis-com-python.html">Ler HDF-EOS de Imagens MODIS com Python</a></h1>
           <div class=summary><p> </p></div>
       </div>
     </div>
 
 <div class="pagination">
 <ul>
-    <a href="/author/arnaldo-russo2.html">&larr; Previous</a>
-    <span class=""><a href="http://arnaldorusso.github.io/author/arnaldo-russo.html">1</a>
-    <span class=""><a href="http://arnaldorusso.github.io/author/arnaldo-russo2.html">2</a>
-    <span class="active"><a href="http://arnaldorusso.github.io/author/arnaldo-russo3.html">3</a>
-    <span class=""><a href="http://arnaldorusso.github.io/author/arnaldo-russo4.html">4</a>
-    <span class=""><a href="http://arnaldorusso.github.io/author/arnaldo-russo5.html">5</a>
-    <span class="next"><a href="/author/arnaldo-russo4.html">Next &rarr;</a>
+    <a href="/tag/3.html">&larr; Previous</a>
+    <span class=""><a href="http://arnaldorusso.github.io/tag/.html">1</a>
+    <span class=""><a href="http://arnaldorusso.github.io/tag/2.html">2</a>
+    <span class=""><a href="http://arnaldorusso.github.io/tag/3.html">3</a>
+    <span class="active"><a href="http://arnaldorusso.github.io/tag/4.html">4</a>
+    <span class="next disabled"><a href="#">&rarr; Next</a>
 </ul>
 </div>
 
