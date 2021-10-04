@@ -40,35 +40,35 @@
         <div class=body>
 
     <div class=entry-overview>
-      <div class=date>Nov 25, 2013</div>
+      <div class=date>nov 25, 2013</div>
       <div class=detail>
           <h1><a href="/testando-e-andando-o-blog.html">Testando e andando o Blog</a></h1>
           <div class=summary><p> </p></div>
       </div>
     </div>
     <div class=entry-overview>
-      <div class=date>Nov 18, 2013</div>
+      <div class=date>nov 18, 2013</div>
       <div class=detail>
           <h1><a href="/o-amor-tambem-fala-python.html">O amor tambem fala Python</a></h1>
           <div class=summary><p> </p></div>
       </div>
     </div>
     <div class=entry-overview>
-      <div class=date>Jan 28, 2013</div>
+      <div class=date>jan 28, 2013</div>
       <div class=detail>
           <h1><a href="/data-frame-r-and-python.html">Data Frame - R and Python</a></h1>
           <div class=summary><p> </p></div>
       </div>
     </div>
     <div class=entry-overview>
-      <div class=date>Dez 10, 2012</div>
+      <div class=date>dez 10, 2012</div>
       <div class=detail>
           <h1><a href="/latitude-e-longitude-ice-cover-nsidc.html">Latitude e Longitude - Ice cover - NSIDC</a></h1>
           <div class=summary><p> </p></div>
       </div>
     </div>
     <div class=entry-overview>
-      <div class=date>Nov 01, 2012</div>
+      <div class=date>nov 01, 2012</div>
       <div class=detail>
           <h1><a href="/loops-tradicionais.html">Loops 'tradicionais'</a></h1>
           <div class=summary><p> </p></div>
@@ -78,10 +78,10 @@
 <div class="pagination">
 <ul>
     <a href="/tag/.html">&larr; Previous</a>
-    <span class=""><a href="http://arnaldorusso.github.io/tag/.html">1</a>
-    <span class="active"><a href="http://arnaldorusso.github.io/tag/2.html">2</a>
-    <span class=""><a href="http://arnaldorusso.github.io/tag/3.html">3</a>
-    <span class=""><a href="http://arnaldorusso.github.io/tag/4.html">4</a>
+    <span class=""><a href="ciclotux.org/tag/.html">1</a>
+    <span class="active"><a href="ciclotux.org/tag/2.html">2</a>
+    <span class=""><a href="ciclotux.org/tag/3.html">3</a>
+    <span class=""><a href="ciclotux.org/tag/4.html">4</a>
     <span class="next"><a href="/tag/3.html">Next &rarr;</a>
 </ul>
 </div>
@@ -118,7 +118,7 @@
         <a href="" target="_blank"><li><i class="icon-pinterest-sign icon-large"></i></li></a>
         -->
 
-        <a href="http://arnaldorusso.github.io/feeds/all.rss.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+        <a href="ciclotux.org/feeds/all.rss.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
       </ul>
     </div>
   </p>

@@ -40,35 +40,35 @@
         <div class=body>
 
     <div class=entry-overview>
-      <div class=date>Set 28, 2012</div>
+      <div class=date>set 28, 2012</div>
       <div class=detail>
           <h1><a href="/livros-ii-oceanic-sciences-and-hydrology.html">Livros II - Oceanic Sciences and Hydrology</a></h1>
           <div class=summary><p> </p></div>
       </div>
     </div>
     <div class=entry-overview>
-      <div class=date>Jul 31, 2012</div>
+      <div class=date>jul 31, 2012</div>
       <div class=detail>
           <h1><a href="/livro-estudos-oceanograficos.html">Livro: Estudos Oceanográficos</a></h1>
           <div class=summary><p> </p></div>
       </div>
     </div>
     <div class=entry-overview>
-      <div class=date>Jun 08, 2012</div>
+      <div class=date>jun 08, 2012</div>
       <div class=detail>
           <h1><a href="/papers-oceanography-and-python.html">Papers - Oceanography and Python</a></h1>
           <div class=summary><p> </p></div>
       </div>
     </div>
     <div class=entry-overview>
-      <div class=date>Mai 05, 2012</div>
+      <div class=date>mai 05, 2012</div>
       <div class=detail>
           <h1><a href="/problemas-para-compilar-pythonh.html">Problemas para compilar. Python.h</a></h1>
           <div class=summary><p> </p></div>
       </div>
     </div>
     <div class=entry-overview>
-      <div class=date>Mai 05, 2012</div>
+      <div class=date>mai 05, 2012</div>
       <div class=detail>
           <h1><a href="/python-pra-oceanografos.html">Python pra Oceanógrafos</a></h1>
           <div class=summary><p> </p></div>
@@ -78,10 +78,10 @@
 <div class="pagination">
 <ul>
     <a href="/tag/2.html">&larr; Previous</a>
-    <span class=""><a href="http://arnaldorusso.github.io/tag/.html">1</a>
-    <span class=""><a href="http://arnaldorusso.github.io/tag/2.html">2</a>
-    <span class="active"><a href="http://arnaldorusso.github.io/tag/3.html">3</a>
-    <span class=""><a href="http://arnaldorusso.github.io/tag/4.html">4</a>
+    <span class=""><a href="ciclotux.org/tag/.html">1</a>
+    <span class=""><a href="ciclotux.org/tag/2.html">2</a>
+    <span class="active"><a href="ciclotux.org/tag/3.html">3</a>
+    <span class=""><a href="ciclotux.org/tag/4.html">4</a>
     <span class="next"><a href="/tag/4.html">Next &rarr;</a>
 </ul>
 </div>
@@ -118,7 +118,7 @@
         <a href="" target="_blank"><li><i class="icon-pinterest-sign icon-large"></i></li></a>
         -->
 
-        <a href="http://arnaldorusso.github.io/feeds/all.rss.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
+        <a href="ciclotux.org/feeds/all.rss.xml" rel="alternate" title="Recent Blog Posts"><li> <i class="icon-rss icon-large"></i> </li></a>
       </ul>
     </div>
   </p>
