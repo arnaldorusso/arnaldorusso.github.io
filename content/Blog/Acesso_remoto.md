@@ -29,6 +29,3 @@ Depois disso, basta  mandar imprimir da sua casa, na impressora do seu servidor.
     
     :::bash
     lpr -P nome_da_impressora NomeDoArquivo.pdf
-
-
-
