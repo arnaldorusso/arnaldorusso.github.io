@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Ciclotux</title><link href="ciclotux.org/" rel="alternate"></link><link href="ciclotux.org/feeds/all.atom.xml" rel="self"></link><id>ciclotux.org/</id><updated>2021-10-01T00:00:00-03:00</updated><entry><title>Hello Anarchy World</title><link href="ciclotux.org/hello-anarchy-world.html" rel="alternate"></link><updated>2021-10-01T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2021-10-01:ciclotux.org/hello-anarchy-world.html</id><summary type="html">&lt;p&gt;Esses dias ao publicar o Zine "PanZine", trantando sobre as distopias sociais e os problemas mundanos diante da COVID-19, reparei on quanto anárquico é possível sermos indivíduos anárquicos.
+Talvez aproximado com Guattari, a sentido de devir-máquina, somos um usuário dentro do nosso próprio Server.
+    :::bash
+    anarchy -P 2357 pensamentos user@server_IP:local/para/onde/agir&lt;/p&gt;
+&lt;p&gt;Talvez seja como enviar um comando à máquina, dizendo a ela para realizar os pensamentos em ações, mas usando o programa &lt;strong&gt;anarchy&lt;/strong&gt;, que você pode instalar em si mesmo, através de algumas leituras.ecionar.&lt;/p&gt;
+&lt;p&gt;Boas programações anárquicas meta-lógicas.&lt;/p&gt;</summary><category term="feelings"></category></entry><entry><title>Usando o TMUX com vim e python</title><link href="ciclotux.org/usando-o-tmux-com-vim-e-python.html" rel="alternate"></link><updated>2015-03-19T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2015-03-19:ciclotux.org/usando-o-tmux-com-vim-e-python.html</id><summary type="html">&lt;p&gt;O Tmux é um aplicativo chamado &lt;em&gt;Terminal Multiplexer&lt;/em&gt;, que possibilita uma experiência com suas máquinas remotas, de maneira mais agradável. Você pode fazer splits de janelas e ainda utilizar com mais conveniência seus arquivos e executáveis no servidor remoto. Ele é principalmente bom, para evitar perda dos seus trabalhos no servidor quando a rede cai. Assim a sessão do tmux fica rodando no servidor, bastando ao relogar à maquina digitar um &lt;em&gt;tmux attach&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Para instalar, basta um &lt;em&gt;apt-get tmux&lt;/em&gt; e seu uso básico é descrito em vários lugares pela web.&lt;/p&gt;
+&lt;p&gt;Após acessar o seu servidor com &lt;em&gt;ssh&lt;/em&gt;, você roda um &lt;em&gt;tmux attach&lt;/em&gt; ou &lt;em&gt;tmux new&lt;/em&gt; que ele se encarrega de abrir a sessão corrente no seu servidor ou em criar uma nova, caso não consiga fazer o attach.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tmux new
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Isso fará com que o tmux seja iniciado.
+Existem diversos comando utilizados pelo tmux e os únicos dois que utilizei e venho utilizando são:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Ctrl-b %  &lt;span class="c"&gt;# para criar um split vertical&lt;/span&gt;
+Ctrl-b o  &lt;span class="c"&gt;# que alterna entre os &amp;quot;panes&amp;quot; criados&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;A segunda parte, foi habilitar o plugin &lt;a href="https://github.com/jpalardy/vim-slime"&gt;vim-slime&lt;/a&gt; para interagir com meu vim e poder enviar códigos em partes para um IPython aberto em um dos "panes" criados. Veja como ficou minha janela:&lt;/p&gt;
+&lt;p&gt;&lt;img src="images/tmux.png" alt="vim-tmux" style="width: 400px; background-position: center;"/&gt;&lt;/p&gt;
+&lt;p&gt;Dessa forma, toda vez que quero mandar uma linha do vim para o IPython (que está no "pane" lateral faço assim dentro do &lt;em&gt;vi&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#  Normal Mode
+Shift &lt;span class="p"&gt;+&lt;/span&gt; &lt;span class="k"&gt;v&lt;/span&gt;  # seleciona &lt;span class="k"&gt;a&lt;/span&gt; linha ou &lt;span class="k"&gt;o&lt;/span&gt; bloco que deseja rodar
+Ctrl&lt;span class="p"&gt;-&lt;/span&gt;&lt;span class="k"&gt;c&lt;/span&gt; &lt;span class="k"&gt;c&lt;/span&gt;  # Deixando &lt;span class="k"&gt;o&lt;/span&gt; Ctrl pressionado &lt;span class="k"&gt;e&lt;/span&gt; apertando &lt;span class="s2"&gt;&amp;quot;c&amp;quot;&lt;/span&gt; duas vezes
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;O prompt do vim-slime te faz duas perguntas:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tmux socket name: default
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Após pressionar enter, ou modificar o nome do socket, caso você tenha aberto o tmux com outro nome ou queira acoplar o vim a um outro socket; e depois:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tmux target pane: :
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Onde as combinações são explicitadas aqui:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tmux target pane
+
+&amp;quot;:&amp;quot; means current window, current pane (a reasonable default)
+&amp;quot;:i&amp;quot; means the ith window, current pane
+&amp;quot;:i.j&amp;quot; means the ith window, jth pane
+&amp;quot;h:i.j&amp;quot; means the tmux session where h is the session identifier (either session name or number), the ith window and the jth pane
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Nesse caso usamos a combinação &lt;strong&gt;0.1&lt;/strong&gt; que quer dizer &lt;em&gt;window 0&lt;/em&gt; e &lt;em&gt;pane 1&lt;/em&gt;.
+ficando assim:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;tmux target pane: :&lt;span class="m"&gt;0&lt;/span&gt;.&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Assim está feito o seu transporte de códigos do &lt;em&gt;VI&lt;/em&gt; para o &lt;em&gt;IPython&lt;/em&gt; no seu servidor.
+Deixei no &lt;a href="https://github.com/arnaldorusso/MonVI/blob/master/.tmux.conf"&gt;GitHub&lt;/a&gt; o arquivo de otimizações que estou usando no tmux. Basta colocar no home do seu usuário no servidor.&lt;/p&gt;</summary><category term=""></category></entry><entry><title>One Little two, little three, little Endian</title><link href="ciclotux.org/one-little-two-little-three-little-endian.html" rel="alternate"></link><updated>2014-11-25T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2014-11-25:ciclotux.org/one-little-two-little-three-little-endian.html</id><summary type="html">&lt;p&gt;Sempre que me deparo com os amigos bytes empilhados, recorro ao oráculo
+tentando entender como são feitas as codificações dessas coisas, para
+algo que possamos entender.&lt;/p&gt;
+&lt;p&gt;Para abrir os dados de gelo marinho, em uma das plataformas de dados é a codificação "flat binary two-byte integer" &lt;a href="http://nsidc.org/data/docs/daac/nsidc0079_bootstrap_seaice.gd.html"&gt;dados Nimbus 7&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Para abrir esse dado:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;name_of_file&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;rb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;SeaIce&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fromfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;uint16&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;reshape&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;332&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;316&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Apesar dos dados estarem como two-byte integer, os dados de georeferência estão
+em outra codificação &lt;a href="ftp://sidads.colorado.edu/pub/DATASETS/seaice/polar-stereo/tools/"&gt;Pode ser baixado
+aqui&lt;/a&gt; e a
+codificação e explicações estão
+&lt;a href="http://nsidc.org/data/polar_stereo/tools_geo_pixel.html#dataviewer.sav"&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As orientações são:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Grids that determine the longitude of a given pixel for the 25 km grids
+for either hemisphere (psn for the Northern Hemisphere and pss for the
+Southern Hemisphere). These longitude grids are in binary format and are
+stored as 4-byte integers (little endian) scaled by 100,000 (divide the
+stored value by 100,000 to get decimal degrees). Each array location 
+(i, j) contains the longitude value at the center of the corresponding 
+data grid cells. An East-longitude convention is used; therefore, 
+positive longitude values are to the east of Greenwich, England.
+
+psn25lons_v3.dat: 304 columns x 448 rows, range = [-180.000, 179.814]
+pss25lons_v3.dat: 316 columns x 332 rows, range = [-179.818, 179.818]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Para isso o simples código resolve:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+
+&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;pss25lons_v3.dat&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;rb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;raw_lons&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fromfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;i4&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;# 4-byte integers (little endian)&lt;/span&gt;
+&lt;span class="n"&gt;lons&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;raw_lons&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;reshape&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;332&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;316&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;100000.&lt;/span&gt;
+
+&lt;span class="n"&gt;In&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;101&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="n"&gt;lons&lt;/span&gt;
+&lt;span class="n"&gt;Out&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;101&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; 
+&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;([[&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;42.23257&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;42.05101&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;41.8684&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="mf"&gt;41.8684&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="mf"&gt;42.05101&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="mf"&gt;42.23257&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;42.39744&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;42.21577&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;42.03306&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="mf"&gt;42.03306&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="mf"&gt;42.21577&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="mf"&gt;42.39744&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="p"&gt;[&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;42.56335&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;42.38159&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;42.19877&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="mf"&gt;42.19877&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;   &lt;span class="mf"&gt;42.38159&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+          &lt;span class="mf"&gt;42.56335&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+       &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;134.6339&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;134.81636&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;135.&lt;/span&gt;     &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mf"&gt;135.&lt;/span&gt;     &lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mf"&gt;134.81636&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+         &lt;span class="mf"&gt;134.6339&lt;/span&gt; &lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;134.81753&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;135.&lt;/span&gt;     &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;135.18364&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mf"&gt;135.18364&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mf"&gt;135.&lt;/span&gt;     &lt;span class="p"&gt;,&lt;/span&gt;
+         &lt;span class="mf"&gt;134.81753&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;135.&lt;/span&gt;     &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;135.18247&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;135.3661&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mf"&gt;135.3661&lt;/span&gt; &lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="mf"&gt;135.18247&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+         &lt;span class="mf"&gt;135.&lt;/span&gt;     &lt;span class="p"&gt;]])&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="Python"></category><category term="dtype"></category></entry><entry><title>Utilizando o ipy-vim</title><link href="ciclotux.org/utilizando-o-ipy-vim.html" rel="alternate"></link><updated>2014-08-04T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2014-08-04:ciclotux.org/utilizando-o-ipy-vim.html</id><summary type="html">&lt;p&gt;Você que quer aumentar a sua proditividade com o Python, e gosta de utilizar o
+vim, o desenvolvedor &lt;code&gt;ivanov&lt;/code&gt; criou uma aplicação capaz de conectar o kernel de
+uma sessão IPython com o vim.&lt;/p&gt;
+&lt;p&gt;Para isso, basta adicionar o plugin em seu diretório &lt;em&gt;~/.vim/ftplugin/python&lt;/em&gt; ou
+no seu diretório &lt;em&gt;bundle&lt;/em&gt;, caso você use o &lt;em&gt;infect&lt;/em&gt; para carregar todos os seus
+plugins de forma mais fácil.&lt;/p&gt;
+&lt;p&gt;O &lt;code&gt;vim-ipython&lt;/code&gt; está disponível em: &lt;a href="http://github.com/ivanov/vim-ipython"&gt;http://github.com/ivanov/vim-ipython&lt;/a&gt;. Onde existe um passo a passo para
+instalação e utilização.&lt;/p&gt;
+&lt;p&gt;Se você tem seu vim compilado com a versão atual de utilização do Python, basta
+abrir em uma janela do seu terminal, um ipython console; ou ipython qtconsole;
+e em outra janela rodar o seu vim.&lt;/p&gt;
+&lt;p&gt;Com o vim aberto,&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;:&lt;/span&gt;IPython
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;e isso conectará o seu vim à sessão atual de IPython.
+para rodar todo o seu código você pode utilizar o famoso &lt;strong&gt;F5&lt;/strong&gt; ou &lt;em&gt;&lt;Ctrl&gt;+s&lt;/em&gt; para
+roda a linha atual, ou um bloco selecionado.&lt;/p&gt;
+&lt;p&gt;Caso você não tenha seu vim compilado corretamente, você pode seguir o &lt;a href="https://github.com/mbrochh/vim-as-a-python-ide"&gt;tutorial&lt;/a&gt;
+ do Martin Brocher, em sua apresentação à PyCon 2012.&lt;/p&gt;
+&lt;p&gt;Depois de muito quebrar a cabeça, consegui fazer meu IPython ficar mais produtivo.
+E abandonar por um tempo o meu antigo amigo mágico &lt;em&gt;%paste&lt;/em&gt;. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="images/vim-ipython.png" /&gt;&lt;/p&gt;</summary><category term="IPython"></category><category term="vim"></category></entry><entry><title>Phonegap</title><link href="ciclotux.org/phonegap.html" rel="alternate"></link><updated>2014-07-14T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2014-07-14:ciclotux.org/phonegap.html</id><summary type="html">&lt;p&gt;Meu começo ao mundo da plataforma móvel foi com &lt;a href="http://kivy.org"&gt;Kivy&lt;/a&gt;, mas estou começando umas brincadeiras com javascript e quem sabe tentar pra frente emendar as coisas em Python aqui também!&lt;/p&gt;
+&lt;p&gt;Segue o &lt;a href="http://julianhigman.com/blog/2013/10/17/notes-on-setting-up-phonegap-on-ubuntu-for-android-app-development/"&gt;link&lt;/a&gt; de como fiz para instalar uma plataforma phonegap no Linux.&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Instalando Rpy - Diferentes versões de R</title><link href="ciclotux.org/instalando-rpy-diferentes-versoes-de-r.html" rel="alternate"></link><updated>2014-04-14T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2014-04-14:ciclotux.org/instalando-rpy-diferentes-versoes-de-r.html</id><summary type="html">&lt;p&gt;Para instalar o &lt;strong&gt;rpy&lt;/strong&gt; é necessário ter o R instalado em uma versão menor
+que a "3". Para tanto é necessário que se faça o download da versão desejada e a
+compile com especial atenção&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~
+&lt;span class="nv"&gt;$ &lt;/span&gt;wget -c http://cran.r-project.org/src/base/R-2/R-2.15.1.tar.gz
+&lt;span class="nv"&gt;$ &lt;/span&gt;tar -xzv R-2.15.1.tar.gz
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;R-2.15.1
+&lt;span class="nv"&gt;$ &lt;/span&gt;./configure --enable-R-shlib &lt;span class="c"&gt;# Isto é indicação do **rpy**&lt;/span&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;make
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Depois disso é necessário instalar o rpy, que tem alguns poréns.
+O primeiro deles é ao identificar qual a versão do R que se deve utilizar.
+Baixe o arquivo &lt;a href="http://sourceforge.net/projects/rpy/files/rpy/1.0.3/rpy-1.0.3.tar.gz/download"&gt;aqui&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;RHOMES&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nv"&gt;$HOME&lt;/span&gt;/R-2.15.1
+
+Ou inserir diretamente a linha no seu .bashrc
+
+&lt;span class="nv"&gt;$ &lt;/span&gt;vim ~/.bashrc
+&lt;span class="nb"&gt;export &lt;/span&gt;&lt;span class="nv"&gt;RHOME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;~/R-2.15.1
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;A segunda etapa é modificar o arquivo setup.py, de acordo com a postagem
+&lt;a href="http://ciclotux.org/instalando-rpy.html"&gt;Instalando Rpy&lt;/a&gt;, substituindo a 
+biblioteca 'Rlapack' por 'lapack'.&lt;/p&gt;
+&lt;p&gt;O terceiro passo, o qual gerou tanta dor de cabeça, é o fato do &lt;strong&gt;Rpy&lt;/strong&gt; manter
+um erro de REGEX no seu código.&lt;/p&gt;
+&lt;p&gt;Para isso é necessário modificar a sentença:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;tar -xzv rpy-1.0.3.tar.gz
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;rpy-1.0.3
+&lt;span class="nv"&gt;$ &lt;/span&gt;vim rpy_tools.py
+
+Na linha &lt;span class="m"&gt;101&lt;/span&gt; a regex está incompleta:
+&lt;span class="nv"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; re.search&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; +([0-9]\.[0-9]\.[0-9])&amp;quot;&lt;/span&gt;, output&lt;span class="o"&gt;)&lt;/span&gt;
+
+Modifique para:
+&lt;span class="nv"&gt;version&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; re.search&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot; +([0-9]\.[0-9]+\.[0-9])&amp;quot;&lt;/span&gt;, output&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Após isso falta pouco!
+É necessário alterar o arquivo src/RPY.h&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;rpy-1.0.3/src
+&lt;span class="nv"&gt;$ &lt;/span&gt;vim RPy.h
+
+Na linha que diz:
+&lt;span class="c"&gt;#include &amp;lt;Rdevices.h&amp;gt; /* must follow Graphics.h */&lt;/span&gt;
+
+Modifique para:
+&lt;span class="c"&gt;#include &amp;lt;Rembedded.h&amp;gt; /* must follow Graphics.h */&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Depois disso tudo:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;python setup.py install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Enquanto não consigo migrar os meus códigos de rpy, para rpy2, vou quebrando
+a cabeça para fazer o rpy funcionar.
+Obrigado novamente ao Jedi Irber, que ajudou a solucionar o problema. =]&lt;/p&gt;
+&lt;p&gt;Até mais.&lt;/p&gt;</summary><category term="Rpy"></category></entry><entry><title>Impressão no seu servidor remoto</title><link href="ciclotux.org/impressao-no-seu-servidor-remoto.html" rel="alternate"></link><updated>2014-03-27T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2014-03-27:ciclotux.org/impressao-no-seu-servidor-remoto.html</id><summary type="html">&lt;p&gt;Ontem me senti super feliz ao conseguir conversar com a impressora através de 
+um simples &lt;strong&gt;lpr&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Obviamente a linha de texto faz tudo que a sua interface gráfica deixa disponibilizado para você,
+mas é sempre muito bom quando se consegue algo que sua interface não deixou ali pra você. 
+Digo isso no caso em que sua outra máquina é um servidor e que a tela é sim, somente uma tela
+preta.&lt;/p&gt;
+&lt;p&gt;Antes de enviar o arquivo para o seu servidor, preste atenção com o &lt;strong&gt;scp&lt;/strong&gt; pois 
+de alguma maneira o flag de porta não é o mesmo que para ssh &lt;strong&gt;-p&lt;/strong&gt; e sim &lt;strong&gt;P&lt;/strong&gt; Maiúsculo.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;scp -P Num_da_porta /local/do/seu/arquivo.pdf user@server_IP:local/para/onde/enviar
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Após isso, na sua sessão logada no server, descubra qual a impressora que você deseja imprimir.
+Geralmente existe a impressora padrão do sistema, mas você pode escolher para qual direcionar.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;ssh -p Num_da_porta user@server_IP
+lpstat -p -d
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Isso retornará uma lista das impressoras em sua rede e plugadas localmente.&lt;/p&gt;
+&lt;p&gt;Depois disso, basta  mandar imprimir da sua casa, na impressora do seu servidor.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lpr -P nome_da_impressora NomeDoArquivo.pdf
+&lt;/pre&gt;&lt;/div&gt;</summary><category term=""></category></entry><entry><title>Music hack Day - Londres</title><link href="ciclotux.org/music-hack-day-londres.html" rel="alternate"></link><updated>2013-12-25T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2013-12-25:ciclotux.org/music-hack-day-londres.html</id><summary type="html">&lt;p&gt;&lt;img alt="Music Hack Day - London 2013" src="images/mhd.png" /&gt;&lt;/p&gt;
+&lt;p&gt;É sempre grande empolgação poder estar perto de pessoas que viabilizam as ferramentas cotidianas. Depois de alguns encontros Python e depois de dividir um pouco dessa entusiasmo com algumas pessoas que participaram de um curso introdutório de Python aplicado à oceanografia. Dessa vez foi a participação de outro evento, que é o Music Hack Day, que tem uma filosofia bastante coerente com as minhas ideologias. &lt;/p&gt;
+&lt;p&gt;É engrandecedor não se sentir sozinho e ao mesmo tempo parte de um mecanismo de decisão moderno, que se orienta pela criatividade de como as pessoas impões usos às máquinas. A música não está desconexa desse processe também. Se você já ssistiu algum filme com as tecnologias Dolby, você já se aproveitou disso, sem saber. De alguma forma, os bens da indústria e dos serviços, tiveram antes que circular por algum software, inclusive os sonoros.&lt;/p&gt;
+&lt;p&gt;Nesse evento o contato com desenvolvedores de plataformas para escutar música na web, software para diagramação de partituras, gente que processa sinais de reconhecimento de voz e até programadores buscando otimizar os processos chamdos de "tempo real" no processamento de sinais sonoros. Outras brincadeiras foram desenvolvidas também, como aplicativos para encontrar pubs que tocam músicas que tenham o seu estilo musical, até mesmo aplicativos para sincronizar o seu ritmo de respiração sonora e te sugerir músicas para o próximo dia.&lt;/p&gt;
+&lt;p&gt;Para mim, o mais legal de tudo foi ver uma galera  a programar por quase dois dias ininterruptos, buscando na diversão a concretização de algum microprojeto que despertassem o interesse das pessoas.&lt;/p&gt;
+&lt;p&gt;Gente brincando com uns robozinhos de Arduíno, pra ele fazer passar a música do computador, caso comece a tocar alguma música da playlist, que não esteja na preferência da festa! hehehe, entre tantos outros hacks realizados durante o &lt;a href="https://www.hackerleague.org/hackathons/music-hack-day-london-2013/hacks"&gt;evento&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;São dois dias onde a comida, bebida, o espaço e a internet são fornecidas de graça aos participantes, para que possam interagir com as API`s de algumas plataformas (Gracenote, Deezer, Echo Nest, etc...), mas não necessariamente isso. Tudo financiado pelos apoiadores do evento, que prezam por estimular criatividade e interação com bases de códigos já disponíveis (API). O principal objetivo é fazer hacks musicais, seja ele qual for o tema.&lt;/p&gt;
+&lt;p&gt;Foi muito legal ver uma galera compenetrada programando. E um silêncio de que quem não entende esse universo, acha que tá todo mundo quieto, mas que estão verborragicamente "falando" mas através dos meios digitais. Lá se ouvem os teclados em ação e muitas risadas. Claro que a música rola de vez em quando, mas mais se escutam mais os sons dos testes de alguns hacks, e as conversas de entusiasmo entre as pessoas.&lt;/p&gt;
+&lt;p&gt;Apresentei o DataSounds por lá, onde tive alguns feedbacks de pessoas que estudam o som como processo de percepção e uma conversa super interessante sobre composição programada. Onde de alguma forma o DataSounds acaba interagindo nesse campo musical.&lt;/p&gt;
+&lt;p&gt;Quem sabe já é hora de termos uma Music Hack Day no Brasil. Porque não colocar um pouco de SambaMaracatuEmboladaCocoBaiãoFrevoSertanejoChoroXaxadoEletrônico nisso tudo?&lt;/p&gt;
+&lt;p&gt;Espero poder participar mais e mais vezes desses encontros, onde as costas da minha máquina possam refletir a troca com essas experiências (acho que só o lado esquerdo dela) vou deixar o racional pro processador mesmo.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://www.flickr.com/photos/thomasbonte/sets/72157638480162185/"&gt;Algumas Fotos do Thomas Bronte&lt;/a&gt;&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Instalando Rpy</title><link href="ciclotux.org/instalando-rpy.html" rel="alternate"></link><updated>2013-12-01T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2013-12-01:ciclotux.org/instalando-rpy.html</id><summary type="html">&lt;p&gt;Para instalar, você pode fazer o download do pacote 
+&lt;a href="http://sourceforge.net/projects/rpy/files/"&gt;Rpy&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Lá vocês vão encontrar dois "sabores" de como acessar o seu R pelo python.
+Eu prefiro acessar com o &lt;em&gt;Rpy&lt;/em&gt;, por ser simples e direto.&lt;/p&gt;
+&lt;p&gt;O Rpy2 é utilizado por default dentro do &lt;a href="pandas.pydata.org"&gt;Pandas&lt;/a&gt;, mas eu
+acho que é tudo muito truncado. Mais pra frente eu posso falar um pouco mais
+sobre essa opção.&lt;/p&gt;
+&lt;p&gt;Descompacte a pasta no seu diretório.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;unzip rpy-1.0.3a.zip
+&lt;span class="nv"&gt;$ &lt;/span&gt;&lt;span class="nb"&gt;cd &lt;/span&gt;rpy-1.0.3
+&lt;span class="nv"&gt;$ &lt;/span&gt;python setup.py install
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Se você tiver sorte, tudo ocorreu bem...
+Caso contrário, algumas modificações terão que ser realizadas.&lt;/p&gt;
+&lt;p&gt;Para versões mais recentes do R, geralmente o Rpy encontra problemas em
+reconhecer o que chamam de "RHOMES", que é onde fica a instalação do seu R.&lt;/p&gt;
+&lt;p&gt;Existem algumas soluções para isso, descritas no README do pacote.
+A que adotei, e pareceu razoável foi a de fazer um link simbólico&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;sudo ln -s /usr/lib/libR.so /usr/local/lib/
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo ldconfig
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Deverá ocorrer tudo bem agora... mas senão, deve ser por causa do tipo de
+bibliotecas que o setup.py está tentando carregar. Geralmente o erro é:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;/usr/bin/ld: cannot find -lRlapack
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Assim,  deve trocar a linha do setup.py, para carregar a &lt;strong&gt;lapack&lt;/strong&gt; ao 
+invés de &lt;em&gt;Rlapack&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;vi&lt;/span&gt; setup.&lt;span class="k"&gt;py&lt;/span&gt;
+&lt;span class="p"&gt;:&lt;/span&gt;/libraries
+
+# deverá apontar &lt;span class="nb"&gt;para&lt;/span&gt; &lt;span class="k"&gt;a&lt;/span&gt; linha &lt;span class="m"&gt;163&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="k"&gt;c&lt;/span&gt;ódigo
+libraries &lt;span class="p"&gt;=&lt;/span&gt; [&lt;span class="s1"&gt;&amp;#39;R&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Rlapack&amp;#39;&lt;/span&gt;]
+
+# Faç&lt;span class="k"&gt;a&lt;/span&gt; &lt;span class="k"&gt;a&lt;/span&gt; devida substituiçã&lt;span class="k"&gt;o&lt;/span&gt;:
+libraries &lt;span class="p"&gt;=&lt;/span&gt; [&lt;span class="s1"&gt;&amp;#39;R&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;lapack&amp;#39;&lt;/span&gt;]
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;E agora basta instalar!
+Espero que tenha dado certo aí também!&lt;/p&gt;
+&lt;p&gt;Até mais.&lt;/p&gt;</summary><category term="Rpy"></category></entry><entry><title>LaTeX no gmail</title><link href="ciclotux.org/latex-no-gmail.html" rel="alternate"></link><updated>2013-11-28T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2013-11-28:ciclotux.org/latex-no-gmail.html</id><summary type="html">&lt;p&gt;&lt;img alt="gtex" src="images/tex.png" /&gt;
+Só pra não perder a informação, pois tinha desabilitado o plugin e hoje precisei dele, para escrever umas fórmulas num e-mail.&lt;/p&gt;
+&lt;p&gt;O &lt;a href="https://chrome.google.com/webstore/detail/gmailtex/gjnmclkoadjdljnfmbnnhaahilafoeji?utm_source=gmail"&gt;GmailTeX&lt;/a&gt; é um plugin que permite escrever algumas fórmulas e alguns comandos LaTeX, no corpo do seu e-mail.&lt;/p&gt;
+&lt;p&gt;Ao habilitar o plugin, uma notificação nos controles de fluxo do gmail, ficará aparecendo o GmailTeX, onde o help deixa mais claro com funcion.&lt;/p&gt;
+&lt;p&gt;Ao enviar, uma mensagem contendo códigos LaTeX, o destinatário pode ler a mensagem sem ter o plugin instalado.&lt;/p&gt;
+&lt;p&gt;Vale à pena deixar ali no canto, pra hora que precisar!&lt;/p&gt;
+&lt;p&gt;Até mais.&lt;/p&gt;</summary><category term="Latex"></category></entry><entry><title>Mboi Tu`i</title><link href="ciclotux.org/mboi-tui.html" rel="alternate"></link><updated>2013-11-27T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2013-11-27:ciclotux.org/mboi-tui.html</id><summary type="html">&lt;p&gt;É o nome da entidade da &lt;a href="http://pt.wikipedia.org/wiki/Mboi_Tu'i"&gt;Mitologia Guarany&lt;/a&gt; protetora dos corpos d'agua e dos animais aquáticos. &lt;/p&gt;
+&lt;p&gt;Tem o corpo de uma serpente com uma cabeca enorme e um bico de papagaio. Nao por acaso é o nome de meu mais novo companheiro das longas jornadas na frente do computador. Não só pelo trabalho, mas também pela diversão de programar um pouquinho.&lt;/p&gt;
+&lt;p&gt;&lt;img src="images/mboi.jpg" alt="Mboi" style="width: 400px; background-position: center;"/&gt;&lt;/p&gt;
+&lt;p&gt;Chegou ontem meu ThinkPad X230 que dará um tempo para o pequeno mascote (Acer One) que até agora foi meu grande companheiro de aventuras! hehehe&lt;/p&gt;
+&lt;p&gt;Obviamente a instalacao de um Linux em maquinas preparadas para receber de braços abertos &lt;a href="http://desciclopedia.org/wiki/Windows"&gt;aquele carinha mala das "Janelas"&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Algumas leituras na internet e foi o suficiente para cortar o mal pela raiz(hehehe) e arrancar as "janelas' de lá e instalar grandes portas! Pq nao?? hehehe&lt;/p&gt;
+&lt;p&gt;Meu Debian 7 é essa grande porta para o mundo. Com tudo aparentemente funcionando. Bluetooth, wireless, backlight do teclado, mousepad, trackpad, som. Um Chuchu! hehehe&lt;/p&gt;
+&lt;p&gt;Como as coisas ainda estao atualizando aqui por trás, eu tô escrevendo isso no &lt;a href="pythonanywhere.com"&gt;PythonAnywhere&lt;/a&gt; onde vou rodar o pelican e depois empurrar tudo pro github.&lt;/p&gt;
+&lt;p&gt;Viva a internet! Que aqui na Franca nao eh a coisa mais legal de tudo( =/ ).&lt;/p&gt;
+&lt;p&gt;Ate mais!&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Pelican, a minha mais nova aquisiçao Python</title><link href="ciclotux.org/pelican-a-minha-mais-nova-aquisicao-python.html" rel="alternate"></link><updated>2013-11-26T00:00:00-02:00</updated><author><name></name></author><id>tag:,2013-11-26:ciclotux.org/pelican-a-minha-mais-nova-aquisicao-python.html</id><summary type="html">&lt;p&gt;É com grande satisfaçao que volto a escrever no ciclotux.org.&lt;/p&gt;
+&lt;p&gt;Ainda nao esta 100%, alias nem meu teclado está, mas ao menos nao tenho
+que me debater com a plataforma do blogger para poder escrever alguma coisa por aqui.&lt;/p&gt;
+&lt;p&gt;Era um ponta pé no saco, toda vez ficar logando no bendito sistema, abrir aquela caixinha tosca, pra digitar os codigos em tags html, e a cada preview, ver que o blogger tinha colocado mais um monte de tags que sequer voce tinha criado. Agora chega disso!&lt;/p&gt;
+&lt;p&gt;O &lt;a href="getpelican.com"&gt;Pelican&lt;/a&gt; e´ um gerador de conteudo estatico [obviamente escrito em Python] que atraves de um template e de arquivos em markdown contendo os textos a serem publicados (e onde estou escrevendo esse, agora) gera a saida HTML. Com git, eu empurro tudo isso pro &lt;a href="http://github.com"&gt;github&lt;/a&gt;, que hospeda esse projeto grauitamente, e assim fica tudo disponibilizado na rede.&lt;/p&gt;
+&lt;p&gt;Posso garantir, que levei menos tempo pra arrumar esse blog rodando desse jeito, do que organizar 3 codigos que eu quisesse publicar no antigo blogger.&lt;/p&gt;
+&lt;p&gt;Sem mais delongas por hoje!
+Posso dizer que estou feliz!&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Para escrever o post!&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;vi&lt;/span&gt; &lt;span class="n"&gt;post_de_hoje&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;md&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;add&lt;/span&gt; &lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;commit&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;estreia do Pelican&amp;#39;&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;push&lt;/span&gt; &lt;span class="n"&gt;origin&lt;/span&gt; &lt;span class="n"&gt;content&lt;/span&gt;
+
+&lt;span class="c"&gt;# Dentro do diretorio do Blog&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;html&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;publish&lt;/span&gt;
+&lt;span class="err"&gt;$&lt;/span&gt; &lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;github&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="News"></category><category term="Python"></category></entry><entry><title>Testando e andando o Blog</title><link href="ciclotux.org/testando-e-andando-o-blog.html" rel="alternate"></link><updated>2013-11-25T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2013-11-25:ciclotux.org/testando-e-andando-o-blog.html</id><summary type="html">&lt;p&gt;Testando o blog, pq nao!?&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;testando&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;blog&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Ciclotux - pedalando Livre&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term=""></category></entry><entry><title>O amor tambem fala Python</title><link href="ciclotux.org/o-amor-tambem-fala-python.html" rel="alternate"></link><updated>2013-11-18T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2013-11-18:ciclotux.org/o-amor-tambem-fala-python.html</id><summary type="html">&lt;p&gt;Encontrei uma maneira elegante para dizer " Baixinha, eu te amo!"&lt;br /&gt;
+Claro que e um tanto Pythonico, mas como o amor pode ser expresso em qualquer linguagem, por que nao em Python?  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;In&lt;/span&gt;  &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="n"&gt;Baixinha&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;eu&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;te&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt; &lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="n"&gt;Out&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;E eh inf!&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Eu digo, "Baixinha eu te amo"&lt;/p&gt;
+&lt;p&gt;Como eu sou muito amigo do Python... ele ja sabe disso e complementa.
+&lt;strong&gt;"E eh infinito"!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Como o minimo de amor que ela aceita e um &lt;strong&gt;&amp;lt;3&lt;/strong&gt; , escrevi uma funçao Python para isso.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+
+&lt;span class="n"&gt;eu&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;eu&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;te&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;te&amp;#39;&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;Baixinha&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;val&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;val&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&amp;lt;3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="ne"&gt;ReferenceError&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;E eh &lt;/span&gt;&lt;span class="si"&gt;%f&lt;/span&gt;&lt;span class="s"&gt;!&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inf&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;img alt="" src="images/github_pythocat.png" /&gt;   &lt;/p&gt;</summary><category term=""></category></entry><entry><title>Data Frame - R and Python</title><link href="ciclotux.org/data-frame-r-and-python.html" rel="alternate"></link><updated>2013-01-28T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2013-01-28:ciclotux.org/data-frame-r-and-python.html</id><summary type="html">&lt;p&gt;Para acessar alguns dados com &lt;strong&gt;R&lt;/strong&gt;, e poder realizar operaçoes, utilizamos a funçao &lt;strong&gt;data.frame&lt;/strong&gt; podendo agrupando fatores entre outras operaçoes. Em Python a coisa pode ser bastante parecida e com diversas funcionabilidades do pacote &lt;strong&gt;&lt;a href="http://pandas.pydata.org/"&gt;Pandas&lt;/a&gt; [1]&lt;/strong&gt; para Python.  &lt;/p&gt;
+&lt;p&gt;Digamos uma tabela da seguinte maneira:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;ID sp1 sp2 sp3&lt;/span&gt;
+&lt;span class="go"&gt;C1   1   3   2&lt;/span&gt;
+&lt;span class="go"&gt;C1   3   2   0&lt;/span&gt;
+&lt;span class="go"&gt;C1   2   1   1&lt;/span&gt;
+&lt;span class="go"&gt;C2   2   4   0&lt;/span&gt;
+&lt;span class="go"&gt;C2   1   3   1&lt;/span&gt;
+&lt;span class="go"&gt;C3   0   3   4&lt;/span&gt;
+&lt;span class="go"&gt;C3   2   1   2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;O codigo para abrir como data.frame&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="go"&gt;#! /usr/bin/R&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt; &lt;/span&gt;dados &lt;span class="o"&gt;=&lt;/span&gt; read.table&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dados.txt&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; header&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;T&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt; &lt;/span&gt;dados
+&lt;span class="go"&gt;  ID sp1 sp2 sp3&lt;/span&gt;
+&lt;span class="go"&gt;1 C1   1   3   2&lt;/span&gt;
+&lt;span class="go"&gt;2 C1   3   2   0&lt;/span&gt;
+&lt;span class="go"&gt;3 C1   2   1   1&lt;/span&gt;
+&lt;span class="go"&gt;4 C2   2   4   0&lt;/span&gt;
+&lt;span class="go"&gt;5 C2   1   3   1&lt;/span&gt;
+&lt;span class="go"&gt;6 C3   0   3   4&lt;/span&gt;
+&lt;span class="go"&gt;7 C3   2   1   2&lt;/span&gt;
+
+&lt;span class="gp"&gt;&amp;gt; &lt;/span&gt;&lt;span class="kn"&gt;attach&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;dados&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="go"&gt;# transformando a coluna ID em fator.&lt;/span&gt;
+&lt;span class="gp"&gt;&amp;gt; &lt;/span&gt;dados&lt;span class="o"&gt;$&lt;/span&gt;ID &lt;span class="o"&gt;&amp;lt;-&lt;/span&gt; &lt;span class="kp"&gt;as.factor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;dados&lt;span class="o"&gt;$&lt;/span&gt;ID&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;[1] 1 3 2 2 1 0 2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;O que nao era necessario, pois ao carregar o data.frame o R ja´ reconhece essa coluna como factor.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt; &lt;/span&gt;str&lt;span class="p"&gt;(&lt;/span&gt;dados&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt;&amp;#39;data.frame&amp;#39;:   7 obs. of  4 variables:&lt;/span&gt;
+&lt;span class="go"&gt; $ ID : Factor w/ 3 levels &amp;quot;C1&amp;quot;,&amp;quot;C2&amp;quot;,&amp;quot;C3&amp;quot;: 1 1 1 2 2 3 3&lt;/span&gt;
+&lt;span class="go"&gt; $ sp1: int  1 3 2 2 1 0 2&lt;/span&gt;
+&lt;span class="go"&gt; $ sp2: int  3 2 1 4 3 3 1&lt;/span&gt;
+&lt;span class="go"&gt; $ sp3: int  2 0 1 0 1 4 2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;para fazer uma media, por exemplo, utilizando o fator ID.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="gp"&gt;&amp;gt; &lt;/span&gt;&lt;span class="kp"&gt;tapply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;dados&lt;span class="o"&gt;$&lt;/span&gt;sp1&lt;span class="p"&gt;,&lt;/span&gt; dados&lt;span class="o"&gt;$&lt;/span&gt;ID&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kp"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="go"&gt; C1  C2  C3 &lt;/span&gt;
+&lt;span class="go"&gt;2.0 1.5 1.0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Para fazer isso em Python, voce poderia usar o &lt;strong&gt;numpy&lt;/strong&gt;, simplesmente, ou usar as elegantes ferramentas do "pandas". Para quem vem do &lt;strong&gt;R&lt;/strong&gt;, o &lt;strong&gt;&lt;a href="http://pandas.pydata.org/"&gt;Pandas&lt;/a&gt;&lt;/strong&gt; e uma forma facil de se entender com dados tabelados e cheios de fatores.  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dados&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_table&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;dados.txt&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;sep&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dados&lt;/span&gt;
+   &lt;span class="n"&gt;ID&lt;/span&gt;  &lt;span class="n"&gt;sp1&lt;/span&gt;  &lt;span class="n"&gt;sp2&lt;/span&gt;  &lt;span class="n"&gt;sp3&lt;/span&gt;
+&lt;span class="mi"&gt;0&lt;/span&gt;  &lt;span class="n"&gt;C1&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;    &lt;span class="mi"&gt;3&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt;  &lt;span class="n"&gt;C1&lt;/span&gt;    &lt;span class="mi"&gt;3&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;    &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="mi"&gt;2&lt;/span&gt;  &lt;span class="n"&gt;C1&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="mi"&gt;3&lt;/span&gt;  &lt;span class="n"&gt;C2&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;    &lt;span class="mi"&gt;4&lt;/span&gt;    &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="mi"&gt;4&lt;/span&gt;  &lt;span class="n"&gt;C2&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;    &lt;span class="mi"&gt;3&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="mi"&gt;5&lt;/span&gt;  &lt;span class="n"&gt;C3&lt;/span&gt;    &lt;span class="mi"&gt;0&lt;/span&gt;    &lt;span class="mi"&gt;3&lt;/span&gt;    &lt;span class="mi"&gt;4&lt;/span&gt;
+&lt;span class="mi"&gt;6&lt;/span&gt;  &lt;span class="n"&gt;C3&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Acessar somente uma das colunas.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dados&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;sp1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="mi"&gt;0&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="mi"&gt;1&lt;/span&gt;    &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="mi"&gt;2&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="mi"&gt;3&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="mi"&gt;4&lt;/span&gt;    &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="mi"&gt;5&lt;/span&gt;    &lt;span class="mi"&gt;0&lt;/span&gt;
+&lt;span class="mi"&gt;6&lt;/span&gt;    &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;Name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;sp1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Para fazer a media, com a funçao groupby&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dados&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;groupby&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ID&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sp1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;ID&lt;/span&gt;
+&lt;span class="n"&gt;C1&lt;/span&gt;    &lt;span class="mf"&gt;2.0&lt;/span&gt;
+&lt;span class="n"&gt;C2&lt;/span&gt;    &lt;span class="mf"&gt;1.5&lt;/span&gt;
+&lt;span class="n"&gt;C3&lt;/span&gt;    &lt;span class="mf"&gt;1.0&lt;/span&gt;
+&lt;span class="n"&gt;Name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;sp1&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Ainda e possivel fazer varias coisas com o objeto dados (que agora e um DataFrame).
+Por exemplo, pegar a media e a variancia, ordenados por ID.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;dados&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;groupby&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;ID&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sp1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;agg&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;mean&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;var&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;mean&lt;/span&gt;  &lt;span class="n"&gt;var&lt;/span&gt;
+&lt;span class="n"&gt;ID&lt;/span&gt;           
+&lt;span class="n"&gt;C1&lt;/span&gt;   &lt;span class="mf"&gt;2.0&lt;/span&gt;  &lt;span class="mf"&gt;1.0&lt;/span&gt;
+&lt;span class="n"&gt;C2&lt;/span&gt;   &lt;span class="mf"&gt;1.5&lt;/span&gt;  &lt;span class="mf"&gt;0.5&lt;/span&gt;
+&lt;span class="n"&gt;C3&lt;/span&gt;   &lt;span class="mf"&gt;1.0&lt;/span&gt;  &lt;span class="mf"&gt;2.0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Ate mais.&lt;br /&gt;
+[1] &lt;a href="http://pandas.pydata.org/"&gt;http://pandas.pydata.org/&lt;/a&gt;&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Latitude e Longitude - Ice cover - NSIDC</title><link href="ciclotux.org/latitude-e-longitude-ice-cover-nsidc.html" rel="alternate"></link><updated>2012-12-10T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2012-12-10:ciclotux.org/latitude-e-longitude-ice-cover-nsidc.html</id><summary type="html">&lt;p&gt;Aproveitando o tempo de recesso sem postagens, vou falar um pouquinho de como fiz para construir as matrizes de lat e long, dos dados de gelo do NSIDC, com as dicas da Claudinha Parise.  &lt;/p&gt;
+&lt;p&gt;Os dados estao em formato binario, como integer e armazenados de 4 em 4 bytes (em Little endian)[1]. Nao sei se o matlab chegaria a dar problemas com isso, mas em Python e bom especificar. ("&lt;strong&gt;&amp;lt;&lt;/strong&gt;" Little Endian; "&lt;strong&gt;&amp;gt;&lt;/strong&gt;" Big Endian); o "i" e de integer, "u" seria de string(unicode)[2]. Essa foi a dica do Irber; pois eu tava usando dtype = 'uint32', pensando somente na questao dos 4 bytes e esquecendo do "little endian".  &lt;/p&gt;
+&lt;p&gt;Dessa forma, baixa-se o dado de latitude para o hemisferio sul [&lt;a href="ftp://sidads.colorado.edu/pub/DATASETS/brightness-temperatures/polar-stereo/tools/geo-coord/grid/pss25lats_v3.dat"&gt;aqui&lt;/a&gt;] e divide-se por 100000 para ter os graus decimais. Mesmo procedimento para a Longitude.  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;pss25lats_v2.dat&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;rb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;lat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;fromfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kp"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&amp;lt;i4&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;100000.&lt;/span&gt;
+&lt;span class="n"&gt;lat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;lat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;reshape&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;332&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;316&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;[1] &lt;a href="http://nsidc.org/data/polar_stereo/tools_geo_pixel.html"&gt;http://nsidc.org/data/polar_stereo/tools_geo_pixel.html&lt;/a&gt;  &lt;/p&gt;
+&lt;p&gt;[2] &lt;a href="http://docs.scipy.org/doc/numpy/user/basics.byteswapping.html"&gt;http://docs.scipy.org/doc/numpy/user/basics.byteswapping.html&lt;/a&gt;  &lt;/p&gt;</summary><category term=""></category></entry><entry><title>Loops 'tradicionais'</title><link href="ciclotux.org/loops-tradicionais.html" rel="alternate"></link><updated>2012-11-01T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2012-11-01:ciclotux.org/loops-tradicionais.html</id><summary type="html">&lt;p&gt;Meu camarada &lt;a href="http://blog.luizirber.org/"&gt;Irber&lt;/a&gt;, relembrando como fazer um loop 'tradicionalista' onde se pegam os indices dos itens de uma lista ou de um numpy array, usando o enumerate, para pegar o valor e seu "indice".  &lt;/p&gt;
+&lt;p&gt;Buscando, dessa forma, um loop tradicionalista, porem mais pythonico (eu acho).  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;valores = ([1,3,5,7,9])
+for i, value in enumerate(valores):
+    print i, value
+
+Out[2]:
+0 1
+1 3
+2 5
+3 7
+4 9
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Sendo o jeito um tanto mais "conservador" e talvez menos pythonico:  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;for i in xrange(len(valores)):
+    print i, valores[i]
+
+Out[4]:
+0 1
+1 3
+2 5
+3 7
+4 9
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Ate mais. &lt;/p&gt;</summary><category term=""></category></entry><entry><title>Livros II - Oceanic Sciences and Hydrology</title><link href="ciclotux.org/livros-ii-oceanic-sciences-and-hydrology.html" rel="alternate"></link><updated>2012-09-28T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2012-09-28:ciclotux.org/livros-ii-oceanic-sciences-and-hydrology.html</id><summary type="html">&lt;p&gt;Um livro interessante, sobre Python aplicado as ciencias atmosfericas e oceanicas.&lt;br /&gt;
+&lt;a href="http://www.johnny-lin.com/pyintro/"&gt;A Hands-On Introduction to Using Python in the Atmospheric and Oceanic Sciences&lt;/a&gt;&lt;br /&gt;
+Outro livro bacana e sobre a utilizacao do Python em hidrologia.&lt;br /&gt;
+&lt;a href="http://greenteapress.com/pythonhydro/pythonhydro.pdf"&gt;Python in Hydrology&lt;/a&gt;&lt;br /&gt;
+Boas leituras. &lt;/p&gt;</summary><category term=""></category></entry><entry><title>Livro: Estudos Oceanográficos</title><link href="ciclotux.org/livro-estudos-oceanograficos.html" rel="alternate"></link><updated>2012-07-31T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2012-07-31:ciclotux.org/livro-estudos-oceanograficos.html</id><summary type="html">&lt;p&gt;Esta disponivel para download o livro:&lt;br /&gt;
+**&lt;a href="http://www.oceano.furg.br/sistema/upload_php/estudos_oceanograficos.pdf"&gt;Estudos Oceanograficos - do instrumental ao pratico**&lt;/a&gt;&lt;br /&gt;
+Organizado pelo Professor Danilo Calazans - FURG.  &lt;/p&gt;
+&lt;p&gt;Outros livros estao disponiveis no site do **&lt;a href="http://www.cdmb.furg.br/"&gt;Ciencias do Mar**&lt;/a&gt;.  &lt;/p&gt;
+&lt;p&gt;Boas leituras! &lt;/p&gt;</summary><category term=""></category></entry><entry><title>Papers - Oceanography and Python</title><link href="ciclotux.org/papers-oceanography-and-python.html" rel="alternate"></link><updated>2012-06-08T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2012-06-08:ciclotux.org/papers-oceanography-and-python.html</id><summary type="html">&lt;p&gt;Dando parabens aos Oceanografos pelo "dia do Oceanografo", seguem algumas leituras do dia de hoje.  &lt;/p&gt;
+&lt;p&gt;[1] - &lt;a href="http://www.sciencedirect.com/science/article/pii/S0098300401000863"&gt;Geophysical data analysis using Python &lt;/a&gt;- Computers &amp;amp; Geosciences (2002)&lt;br /&gt;
+[2] - &lt;a href="http://www.sciencedirect.com/science/article/pii/S1364815210003221"&gt;OOFɛ: A Python engine for automating regional and coastal ocean forecasts&lt;/a&gt; - Environmental Modelling &amp;amp; Software (2011)  &lt;/p&gt;
+&lt;p&gt;Encontrei esse trabalho[1] dos Bascos autores do &lt;a href="http://www.pyclimate.org/"&gt;PyClimate&lt;/a&gt; (Jon Saenz, Juan Zubillaga, Jesus Fernandez), falando sobre o pacote PyClimate e a implementaçao de ferramentas basicas para a oceanografia.  &lt;/p&gt;
+&lt;p&gt;Funçoes de distribuiçao de probabilidades (PDF's), metodo de EOF e SVD, uso de netCDF, como trabalhar com dias julianos nas convençoes do Cooperative Ocean/Atmosphere Research Data Service (COARDS), filtros multivariados e outros detalhes.  &lt;/p&gt;
+&lt;p&gt;O segundo trabalho[2] e um pacote de ferramentas para trabalhar com o ROMS automatizar previsoes costeiras entre outras coisas. Uma demostraçao do que ja e aplicado no Brasil esta aqui: &lt;a href="http://oceano.fis.ufba.br/oof/main/forecast.php"&gt;http://oceano.fis.ufba.br/oof/main/forecast.php&lt;/a&gt;&lt;br /&gt;
+Ainda nao disponibilizado o codigo (nao sei o porque ainda), mas ele referencia outras ferramentas da modelagem que integram o FORTRAN, como o a implementaçao do modelo atmosferico Neelin-Zeng QTCM1 (feito ja em python &lt;a href="http://www.johnny-lin.com/py_pkgs/qtcm/"&gt;http://www.johnny-lin.com/py_pkgs/qtcm/&lt;/a&gt; ).  &lt;/p&gt;
+&lt;p&gt;Anexos:&lt;br /&gt;
+&lt;a href="https://docs.google.com/open?id=0B8iBXJOZmSx-UldiMUVYME1ON1U"&gt;[1]&lt;/a&gt;&lt;br /&gt;
+&lt;a href="https://docs.google.com/open?id=0B8iBXJOZmSx-QkliYS1EalZUOTA"&gt;[2]&lt;/a&gt;  &lt;/p&gt;
+&lt;p&gt;Boas leituras. &lt;/p&gt;</summary><category term=""></category></entry><entry><title>Problemas para compilar. Python.h</title><link href="ciclotux.org/problemas-para-compilar-pythonh.html" rel="alternate"></link><updated>2012-05-05T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2012-05-05:ciclotux.org/problemas-para-compilar-pythonh.html</id><summary type="html">&lt;p&gt;Estava encontrando erro (Python.h: No such file or directory), para varios arquivos distintos, dependendo do pacote que ia instalar com o &lt;strong&gt;pip&lt;/strong&gt;.  &lt;/p&gt;
+&lt;p&gt;Fiz uma busca e nao encontrei respostas para os pacotes que apresentavam problemas na compilaçao.&lt;br /&gt;
+Em especifico para a instalaçao do Pyclimate em uma das maquinas.  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;src/JDTime_wrap.c:44:20: fatal error: Python.h: Arquivo ou diretorio nao encontrado
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Para resolver isso:  &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/bin/bash&lt;/span&gt;
+aptitude install python-dev
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Instalara os headers e voce podera compilar normalmente.&lt;br /&gt;
+Espero que ajude! &lt;/p&gt;</summary><category term=""></category></entry><entry><title>Python pra Oceanógrafos</title><link href="ciclotux.org/python-pra-oceanografos.html" rel="alternate"></link><updated>2012-05-05T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2012-05-05:ciclotux.org/python-pra-oceanografos.html</id><summary type="html">&lt;p&gt;Aqui vao alguns modulos para trabalhar com dados oceanograficos.  &lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;oceans&lt;/strong&gt; # http://pypi.python.org/pypi/oceans/&lt;br /&gt;
+&lt;strong&gt;seawater&lt;/strong&gt; # http://pypi.python.org/pypi/seawater/2.0.1&lt;br /&gt;
+&lt;strong&gt;pyclimate&lt;/strong&gt; # http://www.pyclimate.org/&lt;br /&gt;
+&lt;strong&gt;pyhdf&lt;/strong&gt; # http://pysclint.sourceforge.net/pyhdf/&lt;br /&gt;
+&lt;strong&gt;pupynere&lt;/strong&gt; # para trabalhar com netcdf (http://pypi.python.org/pypi/pupynere/1.0.15 )&lt;br /&gt;
+&lt;strong&gt;puppy&lt;/strong&gt; # http://pypi.python.org/pypi/Puppy/0.1.4&lt;br /&gt;
+&lt;strong&gt;pydap&lt;/strong&gt; # http://pydap.org/&lt;br /&gt;
+&lt;strong&gt;pandas&lt;/strong&gt; # http://pandas.pydata.org/&lt;br /&gt;
+&lt;strong&gt;rpy2&lt;/strong&gt; # http://rpy.sourceforge.net/&lt;br /&gt;
+&lt;strong&gt;f2py&lt;/strong&gt; # http://www.scipy.org/F2py&lt;br /&gt;
+&lt;strong&gt;GDAL&lt;/strong&gt; # http://www.gdal.org/&lt;br /&gt;
+&lt;strong&gt;pyModis&lt;/strong&gt; # https://github.com/lucadelu/pyModis  &lt;/p&gt;
+&lt;p&gt;E vai o link do wiki_livros, para voce que ja e experiente no uso... ajuda la! =]&lt;br /&gt;
+&lt;a href="http://pt.wikibooks.org/wiki/Python_para_ocean%C3%B3grafos"&gt;http://pt.wikibooks.org/wiki/Python_para_oceanografos&lt;/a&gt;&lt;/p&gt;</summary><category term=""></category></entry><entry><title>Subset MODIS-Aqua (Clorofila-a)</title><link href="ciclotux.org/subset-modis-aqua-clorofila-a.html" rel="alternate"></link><updated>2012-04-28T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2012-04-28:ciclotux.org/subset-modis-aqua-clorofila-a.html</id><summary type="html">&lt;p&gt;Pegando o gancho com uma postagem &lt;a href="http://www.trondkristiansen.com/?page_id=479"&gt;[1]&lt;/a&gt; que ja tinha guardada de um tempo e do pacote pyMODIS &lt;a href="https://bitbucket.org/tylere/pymodis/overview"&gt;[2]&lt;/a&gt;, resolvi fazer o meu subset de imagens MODIS em Python.  &lt;/p&gt;
+&lt;p&gt;Para esse codigo, foram testadas apenas imagens L3 de Clorofila-a, ja processadas pela agencia espacial norte americana (NASA).  &lt;/p&gt;
+&lt;p&gt;Para executar esse codigo, voce precisara de uma imagem: &lt;a href="http://oceandata.sci.gsfc.nasa.gov/cgi/getfile/A20120012012031.L3m_MO_CHL_chlor_a_9km.bz2"&gt;Imagem MODIS de 9km.&lt;/a&gt;  &lt;/p&gt;
+&lt;p&gt;De um bunzip2 no seu diretorio, onde estao as imagens .bz2, para que o codigo abaixo identifique somente as imagens sem a extensao (.bz2).  &lt;/p&gt;
+&lt;p&gt;Um detalhe, e que abaixo segue como fazer o processo em batelada, mas para o exemplo de uma imagem, ja e possivel visualizar a coisa.   &lt;/p&gt;
+&lt;p&gt;Diferentemente do post &lt;a href="http://www.trondkristiansen.com/?page_id=479"&gt;[1]&lt;/a&gt;, nao encontrei dificuldades em utilizar os dados. Logo nao fiz uma conversao em ascii e nem utilizei o HDFview.  &lt;/p&gt;
+&lt;p&gt;[1] &lt;a href="http://www.trondkristiansen.com/?page_id=479"&gt;http://www.trondkristiansen.com/?page_id=479&lt;/a&gt;&lt;br /&gt;
+[2] &lt;a href="https://bitbucket.org/tylere/pymodis/overview"&gt;https://bitbucket.org/tylere/pymodis/overview&lt;/a&gt;  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#/usr/bin/env python&lt;/span&gt;
+&lt;span class="c"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+
+&lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="sd"&gt;subset_MODIS&lt;/span&gt;
+
+&lt;span class="sd"&gt;Programa para Fazer um subset de imagens MODIS&lt;/span&gt;
+&lt;span class="sd"&gt;Dentro dos limites Lat e Long determinados.&lt;/span&gt;
+
+&lt;span class="sd"&gt;Author =  Arnaldo Russo&lt;/span&gt;
+&lt;span class="sd"&gt;e-mail =  arnaldorusso@gmail.com&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyhdf.SD&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;scipy.io&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;glob&lt;/span&gt;
+
+&lt;span class="c"&gt;#setting limits to be cut&lt;/span&gt;
+&lt;span class="n"&gt;LATLIMS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="n"&gt;LONLIMS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;40&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;30&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+&lt;span class="n"&gt;indir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/DATA/database/Images/L3/9km/&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;outdir&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;/DATA/database/Images/L3/resize/&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;filelist&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;glob&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;glob&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;indir&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;A*&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;nfiles&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filelist&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;files&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;path&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;filelist&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="n"&gt;files&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;indir&lt;/span&gt;&lt;span class="p"&gt;):])&lt;/span&gt; &lt;span class="c"&gt;#remove path name&lt;/span&gt;
+
+&lt;span class="n"&gt;names&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;span class="n"&gt;multi_img&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filelist&lt;/span&gt;&lt;span class="p"&gt;)):&lt;/span&gt;
+    &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SD&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filelist&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attributes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;xrange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;())):&lt;/span&gt;
+        &lt;span class="n"&gt;nm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+        &lt;span class="n"&gt;names&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot; &amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;_&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;pin&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;zip&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;names&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;&lt;span class="p"&gt;()[:]))&lt;/span&gt;
+    &lt;span class="n"&gt;lon&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Westernmost_Longitude&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Easternmost_Longitude&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Longitude_Step&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;lat&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Northernmost_Latitude&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Southernmost_Latitude&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Latitude_Step&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="c"&gt;#Get the indices needed for the area of interest&lt;/span&gt;
+    &lt;span class="n"&gt;ilt&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;argmin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lat&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nb"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LATLIMS&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt; &lt;span class="c"&gt;#argmin catch the indices&lt;/span&gt;
+    &lt;span class="n"&gt;ilg&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;argmin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;abs&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;lon&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nb"&gt;min&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LONLIMS&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt; &lt;span class="c"&gt;#of minor element&lt;/span&gt;
+    &lt;span class="n"&gt;ltlm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;fix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;diff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LATLIMS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Latitude_Step&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="n"&gt;lglm&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;fix&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;diff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LONLIMS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Longitude_Step&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="c"&gt;#retrieve data SDS&lt;/span&gt;
+    &lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;datasets&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+    &lt;span class="n"&gt;sds_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="c"&gt;#name of sds. Dictionary method.&lt;/span&gt;
+    &lt;span class="n"&gt;sds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;select&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sds_name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c"&gt;#load the subset of data needed for the map limits given&lt;/span&gt;
+    &lt;span class="n"&gt;P&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sds&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ilt&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="n"&gt;ilt&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;ltlm&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;&lt;span class="n"&gt;ilg&lt;/span&gt;&lt;span class="p"&gt;:(&lt;/span&gt;&lt;span class="n"&gt;ilg&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;lglm&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+    &lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="o"&gt;==-&lt;/span&gt;&lt;span class="mi"&gt;32767&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;nan&lt;/span&gt; &lt;span class="c"&gt;#Rrs_670:bad_value_scaled = -32767s ;&lt;/span&gt;
+    &lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;double&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Slope&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;pin&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Intercept&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+    &lt;span class="n"&gt;LT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;lat&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ilt&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ltlm&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+    &lt;span class="n"&gt;LG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;lon&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;ilg&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;lglm&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+    &lt;span class="n"&gt;Plg&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Plt&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;meshgrid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;LG&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;LT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;#Further plots&lt;/span&gt;
+    &lt;span class="n"&gt;P&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;log&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="c"&gt;#chlorophyll mapping&lt;/span&gt;
+    &lt;span class="n"&gt;multi_img&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;append&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="n"&gt;multi_img&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;asarray&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;multi_img&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;P&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="c"&gt;### Save matrix&lt;/span&gt;
+&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;multi_img&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;multi_img&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;# If you want to share with your Matlab friends Users =]&lt;/span&gt;
+&lt;span class="n"&gt;scipy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;io&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;savemat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;outdir&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;multi_matrix.mat&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;mdict&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;multi_img&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;multi_img&lt;/span&gt;&lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Resultando nessa imagem de Clorofila-a  &lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://2.bp.blogspot.com/-mDQntMCRnWU/T5vXVhAO9BI/AAAAAAAAAKc/2SK7jkOqJKw/s320/chla.png" /&gt;&lt;/p&gt;</summary><category term="MODIS scipy matplotlib python Remote Sensing numpy Aqua"></category></entry><entry><title>Ler HDF-EOS de Imagens MODIS com Python</title><link href="ciclotux.org/ler-hdf-eos-de-imagens-modis-com-python.html" rel="alternate"></link><updated>2012-03-13T00:00:00-03:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2012-03-13:ciclotux.org/ler-hdf-eos-de-imagens-modis-com-python.html</id><summary type="html">&lt;p&gt;Ler HDF de Imagens MODIS com Python.&lt;br /&gt;
+Read HDF-EOS with Python  &lt;/p&gt;
+&lt;p&gt;Enfrentei esse problema por um tempo, por conta de como era feito o acesso as variaveis e como elas seriam carregadas.&lt;br /&gt;
+Usualmente no laboratorio as pessoas utilizam o "Matlab's" para estas finalidades e para listar os atributos, dao o comando hdfinfo e para carregar o hdfread.  &lt;/p&gt;
+&lt;p&gt;Pelo que li, as bibliotecas incorporadas para essa finalidade, sao desenvolvidas em C. Ja que o HDF-EOS e uma extensao da NCSA (National Center for Supercomputing Applications). Dessa forma, o uso do HDF-EOS (Earth Observing System) e uma das formas cientificas de se guardar os dados hierarquicamente.  &lt;/p&gt;
+&lt;p&gt;Em &lt;strong&gt;Python&lt;/strong&gt;, existem algumas bibliotecas para essa finalidade.&lt;br /&gt;
+Testei o &lt;strong&gt;gdal&lt;/strong&gt;(Geospatial Data Abstraction Library)[1] e o &lt;strong&gt;pyhdf&lt;/strong&gt;[2,3]. Ambos sao muito simples de serem instalados.  &lt;/p&gt;
+&lt;p&gt;Antes de mostrar como fazer para carregar os dados, programas no bash shell ja tem uma importante funçao na visualizaçao do HDF. O uso do gdalinfo e habilitado pela intalaçao no proprio linux e o ncdump e uma ferramenta para acesso das informaçoes de NetCDF, mas que funcionou muito bem para o HDF-EOS.  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;#bash
+# gdalinfo para listar todas os atributos
+yepan@waiapi:$ gdalinfo A20100322010059.L3m_MO_CHL_chlor_a_4km.hdf
+
+#ncdump
+yepan@waiapi:$ ncdump -h A20100322010059.L3m_MO_CHL_chlor_a_4km.hdf
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Para acesso ao HDF, fiz o seguinte, primeiramente com o gdal.  &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;gdal&lt;/span&gt;
+
+&lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;A20100322010059.L3m_MO_CHL_chlor_a_4km.hdf&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;ds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;gdal&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;sds_md&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetMetadata&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="c"&gt;#lista os atributos com os valores, guardando&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt;&lt;span class="c"&gt;#em um dicionario.&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;sds_md&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;iterkeys&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;sds_md&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ReadAsArray&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;data&lt;/span&gt;
+&lt;span class="n"&gt;Out&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; 
+&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;([[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
+       &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+       &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;]],&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;float32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Se o HDF tiver algum "Subdataset" e possivel verificar desse jeito:  &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+
+&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="sd"&gt;neste caso e um HDF de coordenadas de gelo&lt;/span&gt;
+&lt;span class="sd"&gt;http://www.iup.uni-bremen.de:8084/amsredata/asi_daygrid_swath/l1a/s6250/grid_coordinates/LongitudeLatitudeGrid-s6250-Antarctic.hdf&lt;/span&gt;
+&lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;gdal&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;gdalnumeric&lt;/span&gt;
+
+&lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;LongitudeLatitudeGrid-s6250-Antarctic.hdf&amp;#39;&lt;/span&gt;
+
+&lt;span class="n"&gt;ds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;gdal&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;sds_md&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;GetMetadata&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;SUBDATASETS&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;SUBDATASET_1_DESC&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;[1328x1264] Longitudes (32-bit floating-point)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;SUBDATASET_1_NAME&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;HDF4_SDS:UNKNOWN:&amp;quot;LongitudeLatitudeGrid-s6250-Antarctic.hdf&amp;quot;:0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;SUBDATASET_2_DESC&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;[1328x1264] Latitudes (32-bit floating-point)&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#39;SUBDATASET_2_NAME&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;HDF4_SDS:UNKNOWN:&amp;quot;LongitudeLatitudeGrid-s6250-Antarctic.hdf&amp;quot;:1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;datakeys&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+&lt;span class="n"&gt;datasets&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;SUBDATASET_1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;SUBDATASET_2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;datanames&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Longitudes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Latitudes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;enumerate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;datasets&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sds_md&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;_NAME&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;description&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sds_md&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;_DESC&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;data&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;gdalnumeric&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;LoadFile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="n"&gt;datakeys&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;datanames&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;j&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;this&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;copy&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="c"&gt;#para ver os dados:&lt;/span&gt;
+&lt;span class="n"&gt;datakeys&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Longitudes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;data&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="n"&gt;datakeys&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Latitudes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;data&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Quanto ao pyhdf, nao me aprofundei ainda nos estudos, mas posso adiantar que ele funcionou para abrir a imagem do MODIS e as coordenadas de gelo tambem, mas de forma muito mais simples. Vamos la!  &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyhdf.SD&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+&lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;A20100322010059.L3m_MO_CHL_chlor_a_4km.hdf&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;ds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SD&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attributes&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="c"&gt;#mostra os atributos&lt;/span&gt;
+&lt;span class="n"&gt;ds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;datasets&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;Out&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;l3m_data&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;fakeDim0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;fakeDim1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;4320&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;8640&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
+&lt;span class="n"&gt;data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;l3m_data&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[:]&lt;/span&gt;
+&lt;span class="n"&gt;Out&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;([[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+&lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt; &lt;span class="err"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;...&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;32767.&lt;/span&gt;&lt;span class="p"&gt;]],&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;float32&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;Para acessar as coordenadas de dados de gelo:  &lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="c"&gt;#!/usr/bin/env python&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;pyhdf.SD&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;
+
+&lt;span class="n"&gt;filename&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;LongitudeLatitudeGrid-s6250-Antarctic.hdf&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;ds&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;SD&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;ds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;datasets&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+&lt;span class="n"&gt;Out&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;  
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Latitudes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;fakeDim2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;fakeDim3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1328&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1264&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+ &lt;span class="s"&gt;&amp;#39;Longitudes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;fakeDim0&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;fakeDim1&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1328&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1264&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)}&lt;/span&gt;
+
+&lt;span class="n"&gt;lat&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ds&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;select&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;Latitudes&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;lat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dimensions&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;Out&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;fakeDim2&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1328&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;fakeDim3&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1264&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c"&gt;#para ver os dados lat[:]&lt;/span&gt;
+&lt;span class="c"&gt;#Existe tambem a funçao &amp;quot;get&amp;quot;, que permite pegar uma porçao do dado, para datasets multidimensionais&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+&lt;p&gt;[1] &lt;a href="http://www.gdal.org/"&gt;http://www.gdal.org/&lt;/a&gt;&lt;br /&gt;
+[2] &lt;a href="http://hdfeos.org/software/pyhdf.php"&gt;http://hdfeos.org/software/pyhdf.php&lt;/a&gt;&lt;br /&gt;
+[3] &lt;a href="http://pysclint.sourceforge.net/pyhdf/"&gt;http://pysclint.sourceforge.net/pyhdf/&lt;/a&gt;&lt;/p&gt;</summary><category term=""></category></entry><entry><title>E com Python digo</title><link href="ciclotux.org/e-com-python-digo.html" rel="alternate"></link><updated>2012-02-08T00:00:00-02:00</updated><author><name></name></author><id>tag:,2012-02-08:ciclotux.org/e-com-python-digo.html</id><summary type="html">&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Oi Mundo!&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="thats"></category><category term="awesome"></category></entry><entry><title>Ler dados binários de gelo marinho com Python</title><link href="ciclotux.org/ler-dados-binarios-de-gelo-marinho-com-python.html" rel="alternate"></link><updated>2012-02-08T00:00:00-02:00</updated><author><name>Arnaldo Russo</name></author><id>tag:,2012-02-08:ciclotux.org/ler-dados-binarios-de-gelo-marinho-com-python.html</id><summary type="html">&lt;p&gt;Estava com erros ao ler arquivos binarios de medias mensais de gelo marinho, conseguidos atraves do site:&lt;br /&gt;
+&lt;a href="ftp://sidads.colorado.edu/DATASETS/seaice/polar-stereo/bootstrap/final-gsfc/south/monthly"&gt;ftp://sidads.colorado.edu/DATASETS/seaice/polar-stereo/bootstrap/final-gsfc/south/monthly&lt;/a&gt;  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;glob&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;glob&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;scipy.io&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;loadmat&lt;/span&gt;
+&lt;span class="c"&gt;# Lista de arquivos binarios&lt;/span&gt;
+&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;sorted&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;glob&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;bt*&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="c"&gt;# pegando somente um dos arquivos para leitura&lt;/span&gt;
+&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;rb&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;map1&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;fromfile&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kp"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;uint16&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="kp"&gt;reshape&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;316&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;332&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="n"&gt;im&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;map1&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;T&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="mf"&gt;10.&lt;/span&gt;
+&lt;span class="n"&gt;SI3&lt;/span&gt;&lt;span class="p"&gt;[:,:,&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;im&lt;/span&gt;
+&lt;span class="c"&gt;# Exemplo de linha do arquivo. Essa e a menor delas. &lt;/span&gt;
+&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;70.&lt;/span&gt;
+&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;readlines&lt;/span&gt;&lt;span class="p"&gt;()[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; 
+&lt;span class="n"&gt;Out&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;]:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&lt;/span&gt;&lt;span class="se"&gt;\x03\x18\x03&lt;/span&gt;&lt;span class="s"&gt;,&lt;/span&gt;&lt;span class="se"&gt;\x03&lt;/span&gt;&lt;span class="s"&gt;C&lt;/span&gt;&lt;span class="se"&gt;\x03&lt;/span&gt;&lt;span class="s"&gt;G&lt;/span&gt;&lt;span class="se"&gt;\x03&lt;/span&gt;&lt;span class="s"&gt;R&lt;/span&gt;&lt;span class="se"&gt;\x03&lt;/span&gt;&lt;span class="s"&gt;i&lt;/span&gt;&lt;span class="se"&gt;\x03&lt;/span&gt;&lt;span class="s"&gt;d&lt;/span&gt;&lt;span class="se"&gt;\x03&lt;/span&gt;&lt;span class="s"&gt;q&lt;/span&gt;&lt;span class="se"&gt;\x03\x88\x03\x87\x03\x9a\&lt;/span&gt;
+
+
+&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;xbd&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;xbd&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;xb8&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;xbd&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;xc0&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;xbf&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;xc5&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;xb5&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;xa2&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;x85&lt;/span&gt;
+
+
+\&lt;span class="n"&gt;x03&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;\&lt;span class="n"&gt;x03N&lt;/span&gt;\&lt;span class="n"&gt;x03B&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;x1a&lt;/span&gt;\&lt;span class="n"&gt;x03&lt;/span&gt;\&lt;span class="n"&gt;xeb&lt;/span&gt;\&lt;span class="n"&gt;x02&lt;/span&gt;\&lt;span class="n"&gt;xc4&lt;/span&gt;\&lt;span class="n"&gt;x02&lt;/span&gt;\&lt;span class="n"&gt;x95&lt;/span&gt;\&lt;span class="n"&gt;x02&lt;/span&gt;\&lt;span class="n"&gt;x94&lt;/span&gt;\&lt;span class="n"&gt;x02p&lt;/span&gt;\&lt;span class="n"&gt;x02w&lt;/span&gt;\&lt;span class="n"&gt;x02X&lt;/span&gt;\&lt;span class="n"&gt;x02H&lt;/span&gt;\&lt;span class="n"&gt;x02&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;\&lt;span class="n"&gt;x02&lt;/span&gt;\&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Sabia que estava errando alguma coisa, pois ao plotar em um mapa, esses dados, eles ficavam assim:  &lt;/p&gt;
+&lt;p&gt;&lt;img alt="" src="http://2.bp.blogspot.com/-62iv06DSDfA/TzLLOKm9BAI/AAAAAAAAADU/sfN9I2gCaw0/s640/testepy.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Figura tosca dos dados de Gelo.
+Depois de muito quebrar a cabeça, analisando pedaços da matriz e comparando com um arquivo que tinha certo, vi que parecia estar faltando algo da codificaçao.&lt;br /&gt;
+De fato, isso se dava ao reshape que fazia ao final de fazer a leitura com o &lt;strong&gt;np.fromfile&lt;/strong&gt;.&lt;br /&gt;
+O que acontece, e que por falta de informaçoes sobre esses dados, nao sabia como eles estava encapsulados. A unica informaçao que tinha e que deveriam ser lidos de 2 em 2 bytes ( o que e justificado pelo &lt;strong&gt;dtype = np.uint16&lt;/strong&gt; ).&lt;br /&gt;
+Mas, como sabia que estava errado, varri a rede buscando alguma informaçao mais efetiva sobre isso.&lt;br /&gt;
+Muito falaram sobre o modulo struct [&lt;a href="http://stackoverflow.com/questions/2865996/reading-a-binary-file-in-python-into-a-struct"&gt;link da dica 1&lt;/a&gt;], mas que nao consegui progredir por esse caminho.&lt;br /&gt;
+Comecei a verificar detalhadamente cada parte do codigo, que tinha, e acabei descobrindo de onde vinha o problema! =]). Tudo estava centrado na questao de que o NumPy faz um reshape nas matrizes de acordo com referencias em C e ou FORTRAN.  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt; reshape(a, newshape, order=&amp;#39;C&amp;#39;):
+    &amp;quot;&amp;quot;&amp;quot;
+    Gives a new shape to an array without changing its data.
+
+    Parameters
+    ----------
+    a : array_like
+        Array to be reshaped.
+    newshape : int or tuple of ints
+        The new shape should be compatible with the original shape. If
+        an integer, then the result will be a 1-D array of that length.
+        One shape dimension can be -1. In this case, the value is inferred
+        from the length of the array and remaining dimensions.
+    order : {&amp;#39;C&amp;#39;, &amp;#39;F&amp;#39;}, optional
+        Determines whether the array data should be viewed as in C
+        (row-major) order or FORTRAN (column-major) order.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Li isso tudo muito rapido e fui testar... Coloquei um order=True e FUNCIONOU! (Acho que por sorte mesmo.) Agora esta mudado para order='F', onde o meu dado "passa bem, sem remedios nem cirurgia".  &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;A saida que obtinha era:
+
+
+
+
+
+
+
+
+In [5]: map1[:,123]
+Out [6]:
+array([1200, 1200, 1200, 1200, 1200, 1200,  712,  870,  928,  958,  957,
+        974,  969,  983,  984,  979,  976,  978,  976,  977,  978,  979,
+        982,  986,  988,  988,  993,  988,  990,  987,  997,  993,  991,
+        995,  997,  990,  986,  992,  989,  993,  990,  975,  985,  979,
+        979,  988,  976,  984,  970,  958,  962,  956,  941,  907,  841,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,  829,  845,
+        774,  583,  486,  474,  557,  681,  774,  824,  840,  857,  861,
+        862,  848,  838,  821,  784,  747,  689,  605,  522,  529,  500,
+        468,  469,  470,  437,  414,  361,  360,  288,  236,  205,  151,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,  191,
+        326,  590,  832,  914,  915,  950,  935, 1200,  951, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200,  695,  890,  945,  973,  960,  956,  972,
+        976,  976])
+
+
+Essa saida, e muito diferente da saida correta, que se consegue com o processamento, incluindo o order=&amp;#39;F&amp;#39;.
+
+
+In [7]: map1[:,123]
+Out [8]:
+array([1200, 1200, 1200, 1200, 0, 1200, 1200, 1200, 0, 0, 0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,  104,  228,
+        301,  389, 1200,  519, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200,  651,  703,  748,  742,  739,  777,  831,
+        915,  958,  965,  978,  988,  984,  988,  991,  989,  986,  986,
+        986,  987,  983,  990,  989,  980,  985,  986,  980,  980,  974,
+        971,  968,  980,  988,  983,  991,  991,  992,  990,  982,  978,
+        973,  987,  989,  993,  987,  980,  977,  980,  982,  981,  984,
+        976,  978,  965,  948,  937,  920,  881,  846, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200,
+       1200,  852,  845,  852,  806,  657,  630,  554,  573,  621,  682,
+        738,  778,  801,  804,  764,  711,  677,  662,  650,  628,  581,
+        544,  517,  483,  459,  422,  395,  394,  400,  409,  380,  373,
+        352,  279,  186,  111,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+          0,    0,    0,    0,    0,    0,    0,    0], dtype=uint16)
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;E aqui a figura tosca, mas com os dados passando bem. (Sea Ice, binary data)&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;![](http://2.bp.blogspot.com/-T34j3s7kSY0/TzUEmmpLQMI/AAAAAAAAADk/Q1q6BwiFsME/s640/teste2.png)
+
+Figura tosca, mas com os dados funcionando.
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="python numpy"></category></entry></feed>
